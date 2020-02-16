@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:padding="10sp">
+
+    <Button style="@style/ClickButton"
+        android:id="@+id/bt_cancel"
+        android:text="취소하기"/>
+
+</LinearLayout>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:padding="10sp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView style="@style/Title"
+                android:id="@+id/day"
+                android:text="요일"/>
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="날짜"
+                android:textSize="17sp"
+                android:layout_gravity="center"
+                android:textColor="@color/text"/>
+
+            <LinearLayout style="@style/CustomBox"
+                android:orientation="horizontal">
+
+                <LinearLayout style="@style/CustomSubBox">
+                    <TextView style="@style/subText"
+                        android:text="수면 시간"/>
+                    <TextView style="@style/CustomText"
+                        android:id="@+id/sleeping_time"
+                        android:text="7:46"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/CustomSubBox">
+                    <TextView style="@style/subText"
+                        android:layout_weight="1"
+                        android:text="수면의 질"/>
+                    <TextView style="@style/CustomText"
+                        android:id="@+id/sleeping_quality"
+                        android:text="79%"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout style="@style/CustomBox"
+                android:orientation="vertical">
+                <TextView style="@style/subText"
+                    android:text="수면 그래프"/>
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/daily_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout style="@style/CustomSubBox">
+                        <TextView style="@style/subText"
+                            android:text="깨어남"/>
+                        <TextView style="@style/CustomText"
+                            android:text="0:19"/>
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/CustomSubBox">
+                        <TextView style="@style/subText"
+                            android:text="얕은 수면"/>
+                        <TextView style="@style/CustomText"
+                            android:text="5:01"/>
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/CustomSubBox">
+                        <TextView style="@style/subText"
+                            android:text="깊은 수면"/>
+                        <TextView style="@style/CustomText"
+                            android:text="2:25"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout style="@style/CustomBox"
+                android:orientation="vertical">
+
+                <LinearLayout style="@style/CustomSubBox"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                    <LinearLayout style="@style/CustomSubBox">
+                        <TextView style="@style/subText"
+                            android:text="취침 시간"/>
+                        <TextView style="@style/CustomText"
+                            android:text="23:34"/>
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/CustomSubBox">
+                        <TextView style="@style/subText"
+                            android:text="기상 시간"/>
+                        <TextView style="@style/CustomText"
+                            android:text="7:25"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout style="@style/CustomSubBox"
+                    android:orientation="horizontal">
+
+                    <LinearLayout style="@style/CustomSubBox">
+                        <TextView style="@style/subText"
+                            android:text="수면 시간"/>
+                        <TextView style="@style/CustomText"
+                            android:text="8:00"/>
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/CustomSubBox">
+                        <TextView style="@style/subText"
+                            android:text="코골이"/>
+                        <TextView style="@style/CustomText"
+                            android:text="8 분"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
