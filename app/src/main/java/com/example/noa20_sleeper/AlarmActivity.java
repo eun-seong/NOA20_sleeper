@@ -7,14 +7,15 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+// 알람이 울릴 때 화면
 public class AlarmActivity extends AppCompatActivity {
-    private static Button wakeupButton;
+    private Button wakeupButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
-        wakeupButton = (Button)findViewById(R.id.bt_wakeup);
+        wakeupButton = findViewById(R.id.bt_wakeup);
 
 
         // 잠금화면 위에서도 사용할수있게

@@ -10,6 +10,7 @@ import android.os.PowerManager;
 
 import static android.content.Context.WIFI_SERVICE;
 
+// 시간에 맞춰 알람을 울리게 하는 리시버
 public class AlarmReceiver extends BroadcastReceiver {
     Context context;
 
@@ -30,7 +31,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
 
         // 절전모드로 와이파이 꺼지는것을 방지
-        WifiManager wifiManager = (WifiManager)context.getSystemService(WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager)context.getApplicationContext().getSystemService(WIFI_SERVICE);
         sWifiLock = wifiManager.createWifiLock("wifilock");
         sWifiLock.setReferenceCounted(true);
         sWifiLock.acquire();

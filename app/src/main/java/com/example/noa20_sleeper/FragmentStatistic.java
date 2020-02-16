@@ -9,8 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+// 네비게이션에서 통계 탭
 public class FragmentStatistic extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_statistic, container, false);
+        View view = inflater.inflate(R.layout.fragment_statistic, container, false);
+
+
+        return view;
     }
 }

@@ -7,10 +7,11 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+// 사용자가 알람을 설정하고 잠에 들었을 때 나오는 화면
 public class SleepingActivity extends AppCompatActivity {
     public static Activity _SleepingActivity;
 
-    private static Button cancelButton;
+    private Button cancelButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +19,7 @@ public class SleepingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sleeping);
         _SleepingActivity = SleepingActivity.this;
 
-        cancelButton = (Button)findViewById(R.id.bt_cancel);
+        cancelButton = findViewById(R.id.bt_cancel);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){

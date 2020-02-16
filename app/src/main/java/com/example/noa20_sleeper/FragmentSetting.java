@@ -9,8 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+// 네비게이션에서 설정 탭
 public class FragmentSetting extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_setting, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_setting, container, false);
+
+
+        return view;
+}
 }

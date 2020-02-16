@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+// 네비게이션에서 지난 밤 탭
 public class FragmentDaily extends Fragment {
     private TextView tv_date;
     private TextView tv_day;
@@ -22,8 +23,8 @@ public class FragmentDaily extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_daily, container, false);
-        tv_date = (TextView)view.findViewById(R.id.date);
-        tv_day = (TextView)view.findViewById(R.id.day);
+        tv_date = view.findViewById(R.id.date);
+        tv_day = view.findViewById(R.id.day);
 
         Date currentTime = Calendar.getInstance().getTime();
         String date_text = new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault()).format(currentTime);

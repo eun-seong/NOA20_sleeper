@@ -24,21 +24,21 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-
+// 네비게이션에서 알람탭
 public class FragmentAlarm extends Fragment {
-    private static TimePicker picker;
-    private static Button startButton;
+    private TimePicker picker;
+    private Button startButton;
     private Calendar nextNotifyTime;
     private Calendar calendar;
     private Intent alarmIntent;
     private Intent sleepingIntent;
-    PendingIntent pendingIntent;
-    AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
+    private AlarmManager alarmManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_alarm, container, false);
-        picker = (TimePicker) view.findViewById(R.id.timePicker);
-        startButton = (Button) view.findViewById(R.id.bt_start);
+        picker = view.findViewById(R.id.timePicker);
+        startButton = view.findViewById(R.id.bt_start);
 
         nextNotifyTime = new GregorianCalendar();
         alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
@@ -98,7 +98,7 @@ public class FragmentAlarm extends Fragment {
                 }
 
                 SharedPreferences.Editor editor = getActivity().getSharedPreferences("daily alarm", getActivity().MODE_PRIVATE).edit();
-                editor.putLong("nextNotifyTime", (long) calendar.getTimeInMillis());
+                editor.putLong("nextNotifyTime", calendar.getTimeInMillis());
                 editor.apply();
 
                 pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);
