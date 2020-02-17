@@ -3,4 +3,12 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="textbox">#19354F</color>
+    <color name="background">#06151F</color>
+    <color name="box">#0C2D44</color>
+    <color name="text">#FFFFFF</color>
+    <color name="sub_text">#96A3AD</color>
+    <color name="active_menu">#50B7EE</color>
+    <color name="inactive_menu">#8C969D</color>
+    <color name="colorTab">#0A1A28</color>
 </resources>

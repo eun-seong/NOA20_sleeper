@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Activity.MainActivity">
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -20,13 +20,14 @@
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background"
+        android:background="@color/colorTab"
         app:itemTextColor="@drawable/selector_bottombar_text"
         app:itemIconTint="@drawable/selector_bottombar_text"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
+        android:padding="3dp"
         app:menu="@menu/menu_bottomnavigationview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

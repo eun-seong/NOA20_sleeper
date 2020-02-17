@@ -1,9 +1,3 @@
 <resources>
     <string name="app_name">sleeper</string>
-    <color name="background">#06151F</color>
-    <color name="box">#0C2D44</color>
-    <color name="text">#FFFFFF</color>
-    <color name="sub_text">#96A3AD</color>
-    <color name="active_menu">#50B7EE</color>
-    <color name="inactive_menu">#8C969D</color>
 </resources>

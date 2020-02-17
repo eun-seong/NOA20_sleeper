@@ -50,7 +50,7 @@
 
             <LinearLayout style="@style/CustomBox"
                 android:orientation="vertical">
-                <TextView style="@style/subText"
+                <TextView style="@style/subTitle"
                     android:text="수면 그래프"/>
 
                 <com.github.mikephil.charting.charts.LineChart

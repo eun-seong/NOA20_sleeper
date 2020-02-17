@@ -1,4 +1,4 @@
-package com.example.noa20_sleeper;
+package com.example.noa20_sleeper.Fragment;
 
 
 import androidx.annotation.NonNull;
@@ -12,11 +12,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TimePicker;
+
+import com.example.noa20_sleeper.Activity.MainActivity;
+import com.example.noa20_sleeper.Activity.SleepingActivity;
+import com.example.noa20_sleeper.AlarmReceiver;
+import com.example.noa20_sleeper.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,6 +32,7 @@ import java.util.Locale;
 
 // 네비게이션에서 알람탭
 public class FragmentAlarm extends Fragment {
+    private static final String TAG = "LOG_TAG";
     private TimePicker picker;
     private Button startButton;
     private Calendar nextNotifyTime;
@@ -33,15 +40,15 @@ public class FragmentAlarm extends Fragment {
     private Intent alarmIntent;
     private Intent sleepingIntent;
     private PendingIntent pendingIntent;
-    private AlarmManager alarmManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_alarm, container, false);
+
+        Log.d(TAG, "onCreateView: FragmentAlarm created");
         picker = view.findViewById(R.id.timePicker);
         startButton = view.findViewById(R.id.bt_start);
 
         nextNotifyTime = new GregorianCalendar();
-        alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         calendar = Calendar.getInstance();
         alarmIntent = new Intent(this.getActivity(), AlarmReceiver.class);
         sleepingIntent = new Intent(this.getActivity(), SleepingActivity.class);
@@ -58,44 +65,15 @@ public class FragmentAlarm extends Fragment {
         int pre_hour = Integer.parseInt(HourFormat.format(currentTime));
         int pre_minute = Integer.parseInt(MinuteFormat.format(currentTime));
 
-        if (Build.VERSION.SDK_INT >= 23) {
-            picker.setHour(pre_hour);
-            picker.setMinute(pre_minute);
-        } else {
-            picker.setCurrentHour(pre_hour);
-            picker.setCurrentMinute(pre_minute);
-        }
+        // SDK 23 이상
+        picker.setHour(pre_hour);
+        picker.setMinute(pre_minute);
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int hour, hour_24, minute;
-                String am_pm;
-                if (Build.VERSION.SDK_INT >= 23) {
-                    hour_24 = picker.getHour();
-                    minute = picker.getMinute();
-                } else {
-                    hour_24 = picker.getCurrentHour();
-                    minute = picker.getCurrentMinute();
-                }
-                if (hour_24 > 12) {
-                    am_pm = "PM";
-                    hour = hour_24 - 12;
-                } else {
-                    hour = hour_24;
-                    am_pm = "AM";
-                }
-
-                // 현재 지정된 시간으로 알람 시간 설정
-                calendar.setTimeInMillis(System.currentTimeMillis());
-                calendar.set(Calendar.HOUR_OF_DAY, hour_24);
-                calendar.set(Calendar.MINUTE, minute);
-                calendar.set(Calendar.SECOND, 0);
-
-                // 이미 지난 시간을 지정했다면 다음날 같은 시간으로 설정
-                if (calendar.before(Calendar.getInstance())) {
-                    calendar.add(Calendar.DATE, 1);
-                }
+                Log.d(TAG, "onCreateView: FragmentAlarm button clicked");
+                setTime();
 
                 SharedPreferences.Editor editor = getActivity().getSharedPreferences("daily alarm", getActivity().MODE_PRIVATE).edit();
                 editor.putLong("nextNotifyTime", calendar.getTimeInMillis());
@@ -103,27 +81,44 @@ public class FragmentAlarm extends Fragment {
 
                 pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);
 
-                // 23 미만
-                if (Build.VERSION.SDK_INT < 23) {
-                    // 19 이상
-                    if (Build.VERSION.SDK_INT >= 19) {
-                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                    }
-                    // 19 미만
-                    else {
-                        // pass
-                        // 알람셋팅
-                        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                    }
-                    // 23 이상
-                } else {
-                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                }
+                // SDK 23 이상
+                ((MainActivity)getActivity()).getAlarmManager().setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
                 startActivity(sleepingIntent);
             }
         });
 
 
         return view;
+    }
+
+    void setTime(){
+        int hour, hour_24, minute;
+        String am_pm;
+        if (Build.VERSION.SDK_INT >= 23) {
+            hour_24 = picker.getHour();
+            minute = picker.getMinute();
+        } else {
+            hour_24 = picker.getCurrentHour();
+            minute = picker.getCurrentMinute();
+        }
+        if (hour_24 > 12) {
+            am_pm = "PM";
+            hour = hour_24 - 12;
+        } else {
+            hour = hour_24;
+            am_pm = "AM";
+        }
+
+        // 현재 지정된 시간으로 알람 시간 설정
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, hour_24);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+
+        // 이미 지난 시간을 지정했다면 다음날 같은 시간으로 설정
+        if (calendar.before(Calendar.getInstance())) {
+            calendar.add(Calendar.DATE, 1);
+        }
     }
 }

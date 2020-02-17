@@ -1,33 +1,41 @@
-package com.example.noa20_sleeper;
+package com.example.noa20_sleeper.Activity;
 
 import android.content.Context;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.noa20_sleeper.R;
+
 // 알람이 울릴 때 화면
 public class AlarmActivity extends AppCompatActivity {
+    private static final String TAG = "LOG_TAG";
     private Button wakeupButton;
     private Vibrator vibrator;
     private Uri uri;
     private Ringtone ringtone;
+    private AudioAttributes audioAttributes;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
-        long[] pattern = {50,2000, 50, 1000 };
-        uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Log.d(TAG, "onCreate: AlarmActivity create");
+        long[] pattern = {500, 2000, 500, 1000 };
+        uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         ringtone = RingtoneManager.getRingtone(getApplicationContext(), uri);
-
+        audioAttributes = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build();
         wakeupButton = findViewById(R.id.bt_wakeup);
         vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -37,21 +45,23 @@ public class AlarmActivity extends AppCompatActivity {
                 | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
                 | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 
-
         vibrator.vibrate(pattern, 0);
-        // TODO 벨이 안울림
+        ringtone.setAudioAttributes(audioAttributes);
         ringtone.play();
 
         wakeupButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                Log.d(TAG, "onClick: AlarmActivity button clicked");
                 vibrator.cancel();
-                ringtone.stop();
+                if(ringtone.isPlaying()) ringtone.stop();
 
                 finish();
             }
         });
-
-        // TODO 알람이 울리면 SleepingAcitivy 종료
+    }
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 }

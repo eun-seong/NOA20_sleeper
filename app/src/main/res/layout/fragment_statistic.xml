@@ -20,7 +20,7 @@
 
             <LinearLayout style="@style/CustomBox"
                 android:orientation="vertical">
-                <TextView style="@style/subText"
+                <TextView style="@style/subTitle"
                     android:text="수면의 질"/>
 
                 <com.github.mikephil.charting.charts.LineChart
@@ -61,7 +61,7 @@
 
             <LinearLayout style="@style/CustomBox"
                 android:orientation="vertical">
-                <TextView style="@style/subText"
+                <TextView style="@style/subTitle"
                     android:text="수면 시간"/>
 
                 <com.github.mikephil.charting.charts.LineChart
@@ -103,7 +103,7 @@
 
             <LinearLayout style="@style/CustomBox"
                 android:orientation="vertical">
-                <TextView style="@style/subText"
+                <TextView style="@style/subTitle"
                     android:text="취침 시간"/>
 
                 <com.github.mikephil.charting.charts.LineChart
@@ -145,7 +145,7 @@
 
             <LinearLayout style="@style/CustomBox"
                 android:orientation="vertical">
-                <TextView style="@style/subText"
+                <TextView style="@style/subTitle"
                     android:text="기상 시간"/>
 
                 <com.github.mikephil.charting.charts.LineChart
@@ -187,7 +187,7 @@
 
             <LinearLayout style="@style/CustomBox"
                 android:orientation="vertical">
-                <TextView style="@style/subText"
+                <TextView style="@style/subTitle"
                     android:text="잠꼬대"/>
 
                 <com.github.mikephil.charting.charts.LineChart
