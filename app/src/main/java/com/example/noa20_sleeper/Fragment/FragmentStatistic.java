@@ -20,6 +20,9 @@ public class FragmentStatistic extends Fragment {
 
         Log.d(TAG, "onCreateView: FragmentStatistics created");
 
+        // TODO 수면 관련 데이터 계산하기
+        // TODO 그래프 그리기
+
         return view;
     }
 }

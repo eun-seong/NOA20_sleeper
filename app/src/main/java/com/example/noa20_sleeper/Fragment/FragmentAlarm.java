@@ -22,6 +22,8 @@ import android.widget.TimePicker;
 import com.example.noa20_sleeper.Activity.MainActivity;
 import com.example.noa20_sleeper.Activity.SleepingActivity;
 import com.example.noa20_sleeper.AlarmReceiver;
+import com.example.noa20_sleeper.InsertData;
+import com.example.noa20_sleeper.PreferenceManager;
 import com.example.noa20_sleeper.R;
 
 import java.text.SimpleDateFormat;
@@ -33,6 +35,7 @@ import java.util.Locale;
 // 네비게이션에서 알람탭
 public class FragmentAlarm extends Fragment {
     private static final String TAG = "LOG_TAG";
+    private static final String nextNotifyTime_key="nextNotifyTime";
     private TimePicker picker;
     private Button startButton;
     private Calendar nextNotifyTime;
@@ -40,6 +43,10 @@ public class FragmentAlarm extends Fragment {
     private Intent alarmIntent;
     private Intent sleepingIntent;
     private PendingIntent pendingIntent;
+    private Context mContext;
+
+    int hour, hour_24, minute;
+    String am_pm;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_alarm, container, false);
@@ -47,14 +54,18 @@ public class FragmentAlarm extends Fragment {
         Log.d(TAG, "onCreateView: FragmentAlarm created");
         picker = view.findViewById(R.id.timePicker);
         startButton = view.findViewById(R.id.bt_start);
+        mContext = this.getContext();
 
         nextNotifyTime = new GregorianCalendar();
         calendar = Calendar.getInstance();
         alarmIntent = new Intent(this.getActivity(), AlarmReceiver.class);
         sleepingIntent = new Intent(this.getActivity(), SleepingActivity.class);
 
-        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("daily alarm", getActivity().MODE_PRIVATE);
-        long millis = sharedPreferences.getLong("nextNotifyTime", Calendar.getInstance().getTimeInMillis());
+//        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("daily alarm", getActivity().MODE_PRIVATE);
+//        long millis = sharedPreferences.getLong("nextNotifyTime", Calendar.getInstance().getTimeInMillis());
+
+        long millis = PreferenceManager.getLong(mContext,nextNotifyTime_key);
+        if(millis == -1) millis = Calendar.getInstance().getTimeInMillis();
 
         nextNotifyTime.setTimeInMillis(millis);
 
@@ -75,9 +86,21 @@ public class FragmentAlarm extends Fragment {
                 Log.d(TAG, "onCreateView: FragmentAlarm button clicked");
                 setTime();
 
-                SharedPreferences.Editor editor = getActivity().getSharedPreferences("daily alarm", getActivity().MODE_PRIVATE).edit();
-                editor.putLong("nextNotifyTime", calendar.getTimeInMillis());
-                editor.apply();
+//                SharedPreferences.Editor editor = getActivity().getSharedPreferences("daily alarm", getActivity().MODE_PRIVATE).edit();
+//                editor.putLong("nextNotifyTime", calendar.getTimeInMillis());
+//                editor.apply();
+
+                PreferenceManager.setLong(mContext, nextNotifyTime_key, calendar.getTimeInMillis());
+
+                SimpleDateFormat today = new SimpleDateFormat("HH:mm");
+                String settime = today.format(calendar.getTime());
+                PreferenceManager.setString(mContext, "alarmTime", ""+settime);
+
+                InsertData task = new InsertData();
+                task.execute("settime.php","setTime", settime);
+
+
+                Log.d(TAG, "onClick: FragmentAlarm "+calendar.getTimeInMillis());
 
                 pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);
 
@@ -93,15 +116,9 @@ public class FragmentAlarm extends Fragment {
     }
 
     void setTime(){
-        int hour, hour_24, minute;
-        String am_pm;
-        if (Build.VERSION.SDK_INT >= 23) {
-            hour_24 = picker.getHour();
-            minute = picker.getMinute();
-        } else {
-            hour_24 = picker.getCurrentHour();
-            minute = picker.getCurrentMinute();
-        }
+        hour_24 = picker.getHour();
+        minute = picker.getMinute();
+
         if (hour_24 > 12) {
             am_pm = "PM";
             hour = hour_24 - 12;

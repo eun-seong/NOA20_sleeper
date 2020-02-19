@@ -49,6 +49,8 @@ public class AlarmActivity extends AppCompatActivity {
         ringtone.setAudioAttributes(audioAttributes);
         ringtone.play();
 
+        // TODO 저장된 데이터 업데이트
+
         wakeupButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){

@@ -42,6 +42,10 @@ public class FragmentDaily extends Fragment {
         tv_date.setText(date_text);
         tv_day.setText(day_text);
 
+        // TODO 제일 최신의 csv 파일을 가져와서 읽기
+        // TODO 그래프 그리기
+        // TODO 수면 관련 데이터 계산하기
+
         return view;
     }
 }
