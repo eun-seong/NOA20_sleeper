@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.noa20_sleeper.R;
+import com.github.mikephil.charting.charts.LineChart;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,6 +24,7 @@ public class FragmentDaily extends Fragment {
     private static final String TAG = "LOG_TAG";
     private TextView tv_date;
     private TextView tv_day;
+    private LineChart dailyChart;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class FragmentDaily extends Fragment {
         Log.d(TAG, "onCreateView: FragmentDaily created");
         tv_date = view.findViewById(R.id.date);
         tv_day = view.findViewById(R.id.day);
+        dailyChart = view.findViewById(R.id.daily_chart);
 
         Date currentTime = Calendar.getInstance().getTime();
         String date_text = new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault()).format(currentTime);

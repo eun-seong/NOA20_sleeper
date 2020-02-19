@@ -12,6 +12,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.noa20_sleeper.AlarmReceiver;
+import com.example.noa20_sleeper.AudioReader;
 import com.example.noa20_sleeper.R;
 
 // 사용자가 알람을 설정하고 잠에 들었을 때 나오는 화면
@@ -24,6 +25,13 @@ public class SleepingActivity extends AppCompatActivity {
     private Intent alarmIntent;
     private Context mContext;
 
+    /*****************************************************/
+    private AudioReader audioReader;
+    private int mSampleRate = 8000;
+    private int inputBlockSize = 256;
+    private int sampleDecimate = 1;
+    /*****************************************************/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +43,13 @@ public class SleepingActivity extends AppCompatActivity {
         mContext = this;
         alarmIntent = new Intent(this, AlarmReceiver.class);
 
+
+        /*****************************************************/
+        audioReader = new AudioReader();
+        doStart();
+        /*****************************************************/
+
+
         cancelButton = findViewById(R.id.bt_cancel);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,14 +57,49 @@ public class SleepingActivity extends AppCompatActivity {
                 Log.d(TAG, "onCreate: SleepingActivity button clicked");
                 pendingIntent = PendingIntent.getBroadcast(mContext, 0, alarmIntent, 0);
 
+                doStop();
+
                 ((MainActivity)MainActivity.mContext).getAlarmManager().cancel(pendingIntent);
                 finish();
             }
         });
-
     }
+
+    /*****************************************************/
+
+
+    public void doStart()
+    {
+        audioReader.startReader(mSampleRate, inputBlockSize * sampleDecimate, new AudioReader.Listener()
+        {
+            @Override
+            public final void onReadComplete(int dB)
+            {
+                receiveDecibel(dB);
+            }
+
+            @Override
+            public void onReadError(int error)
+            {
+
+            }
+        });
+    }
+
+    private void receiveDecibel(final int dB)
+    {
+        Log.e("###", dB+" dB");
+    }
+
+    public void doStop() {
+        audioReader.stopReader();
+    }
+
+    /*****************************************************/
+
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);
     }
+
 }
