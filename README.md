@@ -7,4 +7,5 @@ NOA 2020 Dajeon Sleeper Project
 Timepicker-알람 : [멈춘보단 천천히라도](https://webnautes.tistory.com/1365)   
 SharedPreference Class : [숲속의 작은 이야기](https://re-build.tistory.com/37)   
 데시벨 구하기 : [쎄미](https://susemi99.tistory.com/1017)   
+http통신 : [webnautes](https://webnautes.tistory.com/1189)   
 
