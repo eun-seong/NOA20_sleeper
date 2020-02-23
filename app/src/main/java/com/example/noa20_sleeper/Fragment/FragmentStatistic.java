@@ -28,7 +28,6 @@ public class FragmentStatistic extends Fragment {
 
     private TextView[] tv;
 
-
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_statistic, container, false);
         Log.d(TAG, "onCreateView: FragmentStatistics created");
