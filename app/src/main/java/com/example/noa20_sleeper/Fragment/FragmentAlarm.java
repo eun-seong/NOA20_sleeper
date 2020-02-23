@@ -61,9 +61,6 @@ public class FragmentAlarm extends Fragment {
         alarmIntent = new Intent(this.getActivity(), AlarmReceiver.class);
         sleepingIntent = new Intent(this.getActivity(), SleepingActivity.class);
 
-//        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("daily alarm", getActivity().MODE_PRIVATE);
-//        long millis = sharedPreferences.getLong("nextNotifyTime", Calendar.getInstance().getTimeInMillis());
-
         long millis = PreferenceManager.getLong(mContext,nextNotifyTime_key);
         if(millis == -1) millis = Calendar.getInstance().getTimeInMillis();
 
@@ -85,10 +82,6 @@ public class FragmentAlarm extends Fragment {
             public void onClick(View view) {
                 Log.d(TAG, "onCreateView: FragmentAlarm button clicked");
                 setTime();
-
-//                SharedPreferences.Editor editor = getActivity().getSharedPreferences("daily alarm", getActivity().MODE_PRIVATE).edit();
-//                editor.putLong("nextNotifyTime", calendar.getTimeInMillis());
-//                editor.apply();
 
                 PreferenceManager.setLong(mContext, nextNotifyTime_key, calendar.getTimeInMillis());
 

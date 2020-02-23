@@ -39,6 +39,7 @@
                         <TextView style="@style/subText"
                             android:text="평균"/>
                         <TextView style="@style/CustomText"
+                            android:id="@+id/statistic_quality_mean"
                             android:text="72%"/>
                     </LinearLayout>
 
@@ -46,6 +47,7 @@
                         <TextView style="@style/subText"
                             android:text="최고"/>
                         <TextView style="@style/CustomText"
+                            android:id="@+id/statistic_quality_best"
                             android:text="96%"/>
                     </LinearLayout>
 
@@ -53,6 +55,7 @@
                         <TextView style="@style/subText"
                             android:text="최악"/>
                         <TextView style="@style/CustomText"
+                            android:id="@+id/statistic_quality_worst"
                             android:text="50%"/>
                     </LinearLayout>
 
@@ -80,6 +83,7 @@
                         <TextView style="@style/subText"
                             android:text="평균"/>
                         <TextView style="@style/CustomText"
+                            android:id="@+id/statistic_total_mean"
                             android:text="6:59"/>
                     </LinearLayout>
 
@@ -87,6 +91,7 @@
                         <TextView style="@style/subText"
                             android:text="최고"/>
                         <TextView style="@style/CustomText"
+                            android:id="@+id/statistic_total_best"
                             android:text="8:18"/>
                     </LinearLayout>
 
@@ -94,6 +99,7 @@
                         <TextView style="@style/subText"
                             android:text="최악"/>
                         <TextView style="@style/CustomText"
+                            android:id="@+id/statistic_total_worst"
                             android:text="5:18"/>
                     </LinearLayout>
 
@@ -122,6 +128,7 @@
                         <TextView style="@style/subText"
                             android:text="평균"/>
                         <TextView style="@style/CustomText"
+                            android:id="@+id/statistic_bed_mean"
                             android:text="22:34"/>
                     </LinearLayout>
 
@@ -129,6 +136,7 @@
                         <TextView style="@style/subText"
                             android:text="가장 최근"/>
                         <TextView style="@style/CustomText"
+                            android:id="@+id/statistic_bed_best"
                             android:text="23:30"/>
                     </LinearLayout>
 
@@ -136,6 +144,7 @@
                         <TextView style="@style/subText"
                             android:text="가장 오래 전"/>
                         <TextView style="@style/CustomText"
+                            android:id="@+id/statistic_bed_worst"
                             android:text="21:30"/>
                     </LinearLayout>
 
@@ -164,6 +173,7 @@
                         <TextView style="@style/subText"
                             android:text="평균"/>
                         <TextView style="@style/CustomText"
+                            android:id="@+id/statistic_getup_mean"
                             android:text="7:47"/>
                     </LinearLayout>
 
@@ -171,6 +181,7 @@
                         <TextView style="@style/subText"
                             android:text="가장 최근"/>
                         <TextView style="@style/CustomText"
+                            android:id="@+id/statistic_getup_best"
                             android:text="7:23"/>
                     </LinearLayout>
 
@@ -178,6 +189,7 @@
                         <TextView style="@style/subText"
                             android:text="가장 오래 전"/>
                         <TextView style="@style/CustomText"
+                            android:id="@+id/statistic_getup_worst"
                             android:text="7:59"/>
                     </LinearLayout>
 

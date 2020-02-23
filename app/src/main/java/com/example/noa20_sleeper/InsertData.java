@@ -39,7 +39,7 @@ public class InsertData extends AsyncTask<String, Void, String> {
             if(i != params.length-2) postParameters += "&";
         }
 
-        Log.d(TAG, "doInBackground: InsertData"+postParameters);
+        Log.d(TAG, "doInBackground: InsertData "+postParameters);
 
         try {
             URL url = new URL(serverURL);

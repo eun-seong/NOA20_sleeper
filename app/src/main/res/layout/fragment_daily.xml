@@ -33,7 +33,7 @@
                     <TextView style="@style/subText"
                         android:text="수면 시간"/>
                     <TextView style="@style/CustomText"
-                        android:id="@+id/sleeping_time"
+                        android:id="@+id/daily_totalTime"
                         android:text="7:46"/>
                 </LinearLayout>
 
@@ -43,7 +43,7 @@
                         android:layout_weight="1"
                         android:text="수면의 질"/>
                     <TextView style="@style/CustomText"
-                        android:id="@+id/sleeping_quality"
+                        android:id="@+id/daily_quality"
                         android:text="79%"/>
                 </LinearLayout>
             </LinearLayout>
@@ -53,7 +53,7 @@
                 <TextView style="@style/subTitle"
                     android:text="수면 그래프"/>
 
-                <com.github.mikephil.charting.charts.LineChart
+                <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/daily_chart"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -69,6 +69,7 @@
                         <TextView style="@style/subText"
                             android:text="깨어남"/>
                         <TextView style="@style/CustomText"
+                            android:id="@+id/daily_awakeTime"
                             android:text="0:19"/>
                     </LinearLayout>
 
@@ -76,6 +77,7 @@
                         <TextView style="@style/subText"
                             android:text="얕은 수면"/>
                         <TextView style="@style/CustomText"
+                            android:id="@+id/daily_shallowSleep"
                             android:text="5:01"/>
                     </LinearLayout>
 
@@ -83,6 +85,7 @@
                         <TextView style="@style/subText"
                             android:text="깊은 수면"/>
                         <TextView style="@style/CustomText"
+                            android:id="@+id/daily_deepSleep"
                             android:text="2:25"/>
                     </LinearLayout>
 
@@ -100,6 +103,7 @@
                         <TextView style="@style/subText"
                             android:text="취침 시간"/>
                         <TextView style="@style/CustomText"
+                            android:id="@+id/daily_bedTime"
                             android:text="23:34"/>
                     </LinearLayout>
 
@@ -107,28 +111,10 @@
                         <TextView style="@style/subText"
                             android:text="기상 시간"/>
                         <TextView style="@style/CustomText"
+                            android:id="@+id/daily_getupTime"
                             android:text="7:25"/>
                     </LinearLayout>
                 </LinearLayout>
-
-                <LinearLayout style="@style/CustomSubBox"
-                    android:orientation="horizontal">
-
-                    <LinearLayout style="@style/CustomSubBox">
-                        <TextView style="@style/subText"
-                            android:text="수면 시간"/>
-                        <TextView style="@style/CustomText"
-                            android:text="8:00"/>
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/CustomSubBox">
-                        <TextView style="@style/subText"
-                            android:text="코골이"/>
-                        <TextView style="@style/CustomText"
-                            android:text="8 분"/>
-                    </LinearLayout>
-                </LinearLayout>
-
 
             </LinearLayout>
         </LinearLayout>

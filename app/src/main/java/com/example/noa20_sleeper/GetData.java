@@ -14,6 +14,7 @@ public class GetData extends AsyncTask<String, Void, String> {
     private static final String TAG = "LOG_TAG";
     private static final String IP = "http://172.30.1.37" + ":9090/NOA/";
     String errorString = null;
+    String serverURL;
 
     @Override
     protected void onPreExecute() {
@@ -32,15 +33,15 @@ public class GetData extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
-        String serverURL = IP+params[0];
+        serverURL = IP + params[0];
         String postParameters="";
 
-        for(int i=1;i<params.length;i+=2){
-            postParameters+=params[i]+"="+params[i+1];
+        for(int i = 1;i < params.length;i+=2){
+            postParameters += params[i] + "=" + params[i+1];
             if(i != params.length-2) postParameters += "&";
         }
 
-        Log.d(TAG, "doInBackground: GetData"+postParameters);
+        Log.d(TAG, "doInBackground: GetData "+postParameters);
 
         try {
 
@@ -89,6 +90,8 @@ public class GetData extends AsyncTask<String, Void, String> {
             }
 
             bufferedReader.close();
+
+            Log.d(TAG, "doInBackground: GetData : "+ sb.toString());
 
             return sb.toString().trim();
 

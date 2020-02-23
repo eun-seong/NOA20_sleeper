@@ -8,9 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.noa20_sleeper.AlarmReceiver;
 import com.example.noa20_sleeper.AudioReader;
 import com.example.noa20_sleeper.InsertData;
-import com.example.noa20_sleeper.PreferenceManager;
 import com.example.noa20_sleeper.R;
 
 import java.text.SimpleDateFormat;
@@ -71,7 +67,6 @@ public class SleepingActivity extends AppCompatActivity {
         LatestDate = today.format(date);
         Log.d(TAG, "onCreate: SleepingActivity : Date "+LatestDate);
 
-
         // TODO 사용자의 환경 기본 소음이 얼마인지 알아내기
         // 아마도 처음 5~10분 기준?
 
@@ -100,7 +95,7 @@ public class SleepingActivity extends AppCompatActivity {
         };
 
         doStart();
-        timer.schedule(timerTask, 10000, 300000); //Timer 실행
+        timer.schedule(timerTask, 300000, 300000); //Timer 실행
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
