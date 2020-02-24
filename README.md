@@ -1,5 +1,5 @@
 # NOA20_sleeper
-NOA 2020 Dajeon Sleeper Project
+NOA 2020 Daejeon Sleeper Project
 
 ### 참조한 사이트
 차트 API : [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart), [JavaDocs](https://javadoc.jitpack.io/com/github/PhilJay/MPAndroidChart/v3.1.0/javadoc/)   
