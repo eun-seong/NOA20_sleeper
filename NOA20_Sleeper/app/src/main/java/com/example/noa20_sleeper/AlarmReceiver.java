@@ -3,7 +3,6 @@ package com.example.noa20_sleeper;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.os.PowerManager;
 import android.util.Log;
 
@@ -18,7 +17,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     //PowerManager.WakeLock 빈객체 선언한다.
     private static PowerManager.WakeLock mCpuWakeLock;
-    private static ConnectivityManager manager;
 
     @Override
     public void onReceive(Context context, Intent intent) {
