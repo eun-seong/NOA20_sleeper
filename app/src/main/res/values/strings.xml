@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">sleeper</string>
+    <string name="TABLE_NAME_TODAY">today</string>
+    <string name="TABLE_NAME_YESTERDAY">yesterday</string>
+    <string name="TABLE_COL_TIME">time</string>
+    <string name="TABLE_COL_LEVEL">level</string>
+</resources>

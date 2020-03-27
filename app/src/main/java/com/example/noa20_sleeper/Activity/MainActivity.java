@@ -17,7 +17,6 @@ import android.view.MenuItem;
 
 import com.example.noa20_sleeper.Fragment.FragmentAlarm;
 import com.example.noa20_sleeper.Fragment.FragmentDaily;
-import com.example.noa20_sleeper.Fragment.FragmentSetting;
 import com.example.noa20_sleeper.Fragment.FragmentStatistic;
 import com.example.noa20_sleeper.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private FragmentAlarm fragmentAlarm = new FragmentAlarm();
     private FragmentDaily fragmentDaily = new FragmentDaily();
-    private FragmentSetting fragmentSetting = new FragmentSetting();
     private FragmentStatistic fragmentStatistic = new FragmentStatistic();
     private static AlarmManager alarmManager;
     public static Context mContext;
@@ -63,9 +61,6 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.Daily:
                     transaction.replace(R.id.frameLayout, fragmentDaily).commitAllowingStateLoss();
-                    break;
-                case R.id.Setting:
-                    transaction.replace(R.id.frameLayout, fragmentSetting).commitAllowingStateLoss();
                     break;
                 case R.id.Statistic:
                     transaction.replace(R.id.frameLayout, fragmentStatistic).commitAllowingStateLoss();

@@ -32,6 +32,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         SleepingActivity sleepingActivity = (SleepingActivity)SleepingActivity._SleepingActivity;
+        sleepingActivity.TimeTaskStop();
+        sleepingActivity.doStop();
         sleepingActivity.finish();
 
         // 액티비티를 띄운다

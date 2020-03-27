@@ -1,5 +1,6 @@
 package com.example.noa20_sleeper;
 
+
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -10,49 +11,41 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class GetData extends AsyncTask<String, Void, String> {
+public class InsertData extends AsyncTask<String, Void, String> {
     private static final String TAG = "LOG_TAG";
-    private static final String IP = "http://172.30.1.37" + ":9090/NOA/";
-    String errorString = null;
-    String serverURL;
+    private static final String IP = "http://192.168.0.16" + ":9090/NOA/";
+//    private static final String IP = "http://172.30.1.37" + ":9090/NOA/";
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-
     }
-
 
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-
-
     }
-
 
     @Override
     protected String doInBackground(String... params) {
-        serverURL = IP + params[0];
+        String serverURL = IP+params[0];
         String postParameters="";
 
-        for(int i = 1;i < params.length;i+=2){
-            postParameters += params[i] + "=" + params[i+1];
+        for(int i=1;i<params.length;i+=2){
+            postParameters+=(params[i]+"="+params[i+1]);
             if(i != params.length-2) postParameters += "&";
         }
 
-        Log.d(TAG, "doInBackground: GetData "+postParameters);
+        Log.d(TAG, "doInBackground: InsertData "+postParameters);
 
         try {
 
             URL url = new URL(serverURL);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
-
             httpURLConnection.setReadTimeout(5000);
             httpURLConnection.setConnectTimeout(5000);
             httpURLConnection.setRequestMethod("POST");
-            httpURLConnection.setDoInput(true);
             httpURLConnection.connect();
 
             OutputStream outputStream = httpURLConnection.getOutputStream();
@@ -60,9 +53,8 @@ public class GetData extends AsyncTask<String, Void, String> {
             outputStream.flush();
             outputStream.close();
 
-
             int responseStatusCode = httpURLConnection.getResponseCode();
-            Log.d(TAG, "response code - " + responseStatusCode);
+            Log.d(TAG, "POST response code - " + responseStatusCode);
 
             while(responseStatusCode!=200){
                 httpURLConnection.setReadTimeout(5000);
@@ -83,7 +75,7 @@ public class GetData extends AsyncTask<String, Void, String> {
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
             StringBuilder sb = new StringBuilder();
-            String line;
+            String line = null;
 
             while((line = bufferedReader.readLine()) != null){
                 sb.append(line);
@@ -91,17 +83,13 @@ public class GetData extends AsyncTask<String, Void, String> {
 
             bufferedReader.close();
 
-            Log.d(TAG, "doInBackground: GetData : "+ sb.toString());
-
-            return sb.toString().trim();
+            return sb.toString();
 
         } catch (Exception e) {
-
             Log.d(TAG, "InsertData: Error ", e);
-            errorString = e.toString();
-
-            return null;
+            return new String("Error: " + e.getMessage());
         }
 
     }
 }
+

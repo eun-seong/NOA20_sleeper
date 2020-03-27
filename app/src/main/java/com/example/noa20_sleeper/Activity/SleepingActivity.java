@@ -4,10 +4,11 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.JavascriptInterface;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import com.example.noa20_sleeper.AudioReader;
 import com.example.noa20_sleeper.InsertData;
 import com.example.noa20_sleeper.R;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
@@ -44,6 +46,7 @@ public class SleepingActivity extends AppCompatActivity {
     private final int sampleDecimate = 1;
 
     private Button cancelButton;
+    private SQLiteDatabase sqliteDB = null ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,8 @@ public class SleepingActivity extends AppCompatActivity {
         LatestDate = today.format(date);
         Log.d(TAG, "onCreate: SleepingActivity : Date "+LatestDate);
 
+        DBinit();
+
         // TODO 사용자의 환경 기본 소음이 얼마인지 알아내기
         // 아마도 처음 5~10분 기준?
 
@@ -74,7 +79,7 @@ public class SleepingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Log.d(TAG, "run: SleepingActivity calculate");
-                level = sumOfDB/cnt;
+                level = sumOfDB/cnt + 100;
 
                 /* TODO status의 범위 지정
                  0 : 깨어남
@@ -86,8 +91,17 @@ public class SleepingActivity extends AppCompatActivity {
                 String strNow = time.format(date);
                 Log.d(TAG, "run: SleepingActivity time : "+strNow+ " level : "+level);
 
-                InsertData task = new InsertData();
-                task.execute("addData.php","date",LatestDate,"time",""+strNow,"level",""+level);
+//                InsertData task = new InsertData();
+//                task.execute("addData.php",
+//                        "level",Double.toString(level));
+
+                String sqlUpdate = "INSERT OR REPLACE INTO "+ getString(R.string.TABLE_NAME_TODAY) + "("+
+                        getString(R.string.TABLE_COL_TIME) +", "+
+                        getString(R.string.TABLE_COL_LEVEL) +") VALUES ('" +
+                        strNow +"', "+
+                        level +")";
+
+                sqliteDB.execSQL(sqlUpdate);
 
                 sumOfDB=0;
                 cnt=0;
@@ -95,7 +109,7 @@ public class SleepingActivity extends AppCompatActivity {
         };
 
         doStart();
-        timer.schedule(timerTask, 300000, 300000); //Timer 실행
+        timer.schedule(timerTask, 10000, 10000); //Timer 실행
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +129,37 @@ public class SleepingActivity extends AppCompatActivity {
         });
     }
 
+    public void DBinit(){
+        /************ DB 설정 ************/
+        String filename = "UsrData.db";
+        try {
+            File databseFile = getDatabasePath(filename);
+            sqliteDB = SQLiteDatabase.openOrCreateDatabase(databseFile, null);
+        } catch (SQLiteException e) {
+            String databasePath = getFilesDir().getPath()+"/"+filename;
+            File databaseFile = new File(databasePath);
+            sqliteDB = SQLiteDatabase.openOrCreateDatabase(databaseFile, null);
+
+            e.printStackTrace() ;
+        }
+
+        String sqlCreateTbl = "CREATE TABLE IF NOT EXISTS " + getString(R.string.TABLE_NAME_TODAY) + " (" +
+                getString(R.string.TABLE_COL_TIME) +" TEXT, " +
+                getString(R.string.TABLE_COL_LEVEL) +" INTEGER);" ;
+
+        sqliteDB.execSQL(sqlCreateTbl);
+
+        sqlCreateTbl = "CREATE TABLE IF NOT EXISTS " + getString(R.string.TABLE_NAME_YESTERDAY) + " (" +
+                getString(R.string.TABLE_COL_TIME) +" TEXT, " +
+                getString(R.string.TABLE_COL_LEVEL) +" INTEGER);" ;
+
+        sqliteDB.execSQL(sqlCreateTbl);
+    }
+
+    public void TimeTaskStop(){
+        timer.cancel();
+    }
+
     public void doStart()
     {
         audioReader.startReader(mSampleRate, inputBlockSize * sampleDecimate, new AudioReader.Listener()
@@ -123,8 +168,10 @@ public class SleepingActivity extends AppCompatActivity {
             public final void onReadComplete(int dB)
             {
                 receiveDecibel(dB);
-                sumOfDB+=dB;
-                cnt++;
+                if(dB > -200) {
+                    sumOfDB += dB;
+                    cnt++;
+                }
             }
 
             @Override
@@ -149,22 +196,6 @@ public class SleepingActivity extends AppCompatActivity {
     public void onBackPressed() {
         moveTaskToBack(true);
     }
-
-
-    /***************************************************************************/
-
-    class WebBridge {
-        @JavascriptInterface
-        public void SuccessArrival() {  // 목적지에 도착할 경우 실행
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-
-                }
-            });
-        }
-    }
-
 }
 
 
