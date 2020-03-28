@@ -19,13 +19,38 @@ public class FragmentStatistic extends Fragment {
     private static final String TAG = "LOG_TAG";
     private TextView[] tv;
     private String[] COL_NAMES;
+    private int[] tvId;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_statistic, container, false);
         Log.d(TAG, "onCreateView: FragmentStatistics created");
+        initValue(view);
+        setNums(view);
 
+        // TODO 그래프 그리기
+
+
+        try {
+            String myJSON = new GetData().execute("getStatisticsData.php").get();
+            JSONObject jsonObject = new JSONObject(myJSON);
+            JSONArray dataJSON = jsonObject.getJSONArray(getString(R.string.TABLE_NAME_STATISTICS));
+
+            for(int i=0;i<4;i++){
+                JSONArray c = dataJSON.getJSONObject(i).getJSONArray(COL_NAMES[i]);
+                Log.d(TAG, "onCreateView: JSON "+c);
+
+            }
+
+        } catch (Exception e){
+            Log.e(TAG, "onCreateView: FragmentDaily ", e);
+        }
+
+        return view;
+    }
+
+    private void initValue(View view){
         tv = new TextView[12];
-        int[] tvId = {
+        tvId = new int[]{
                 R.id.statistic_quality_mean, R.id.statistic_quality_best, R.id.statistic_quality_worst,
                 R.id.statistic_total_mean, R.id.statistic_total_best, R.id.statistic_total_worst,
                 R.id.statistic_bed_mean, R.id.statistic_bed_best, R.id.statistic_bed_worst,
@@ -41,8 +66,9 @@ public class FragmentStatistic extends Fragment {
         for(int i=0;i<12;i++){
             tv[i] = view.findViewById(tvId[i]);
         }
+    }
 
-        // TODO 그래프 그리기
+    private void setNums(View view){
 
         try {
             String myJSON = new GetData().execute("getStatistics.php").get();
@@ -65,7 +91,5 @@ public class FragmentStatistic extends Fragment {
         } catch (Exception e){
             Log.e(TAG, "onCreateView: FragmentDaily ", e);
         }
-
-        return view;
     }
 }

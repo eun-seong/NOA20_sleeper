@@ -103,11 +103,19 @@ public class AlarmActivity extends AppCompatActivity {
         cursor = sqliteDB.rawQuery(sql, null);
 
         int cnt = 0, num = cursor.getCount();
-        int getupTime=0, bedTime=0, totalTime=num*5;
-
+        int getupTime=0, bedTime=0, totalTime=num*5,total1 = 0, total2 = 0, total3 = 0;
         while(cursor.moveToNext()) {
             String time = cursor.getString(0);
+            int level = cursor.getInt(1);
             cnt++;
+
+            if(40 <level && level< 45 ){
+                total1++;
+            }else if(45<level && level< 50){
+                total2++;
+            }else{
+                total3++;
+            }
 
             int hour = Integer.parseInt(time.substring(0,2));
             int minute = Integer.parseInt(time.substring(3));
@@ -115,6 +123,18 @@ public class AlarmActivity extends AppCompatActivity {
             if(cnt==1) getupTime = hour*60 + minute;
             else if(cnt==num) bedTime = hour*60 + minute;
         }
+
+        int deep = total1*5, shallow = total2*5, wakeup = total3*5;
+        String totalminute1 = Integer.toString(deep);
+        Log.e("깊은 수면 ", totalminute1);
+
+        String totalminute2 = Integer.toString(shallow);
+        Log.e("얕은 수면 ", totalminute2);
+
+        String totalminute3 = Integer.toString(wakeup);
+        Log.e("깨어남 ", totalminute3);
+
+
         cursor.close();
 
         InsertData task = new InsertData();
@@ -124,9 +144,9 @@ public class AlarmActivity extends AppCompatActivity {
                 getString(R.string.COL_GETUPTIME), Integer.toString(getupTime),
                 // TODO time 수정
                 getString(R.string.COL_QUALITY), Integer.toString(getupTime),
-                getString(R.string.COL_AWAKETIME), Integer.toString(getupTime),
-                getString(R.string.COL_SHALLOWSLEEP), Integer.toString(getupTime),
-                getString(R.string.COL_DEEPSLEEP), Integer.toString(getupTime));
+                getString(R.string.COL_AWAKETIME), Integer.toString(wakeup),
+                getString(R.string.COL_SHALLOWSLEEP), Integer.toString(shallow),
+                getString(R.string.COL_DEEPSLEEP), Integer.toString(deep));
     }
 
     @Override

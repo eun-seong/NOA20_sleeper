@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -77,14 +78,15 @@ public class FragmentDaily extends Fragment {
         while(cursor.moveToNext()) {
             String time = cursor.getString(0);
             int level = cursor.getInt(1);
-            entries.add(new BarEntry(cnt, level));
             cnt++;
 
-            int hour = Integer.parseInt(time.substring(0,2));
-            int minute = Integer.parseInt(time.substring(3));
-
-            // TODO 제일 최신의 csv 파일을 가져와서 읽기
-            // TODO 그래프 그리기
+            if(level<60){
+                entries.add(new BarEntry(cnt, new float[]{level, 0, 0}));
+            }else if(level<70){
+                entries.add(new BarEntry(cnt, new float[]{0, level, 0}));
+            }else{
+                entries.add(new BarEntry(cnt, new float[]{0, 0, level}));
+            }
         }
 
         try {
@@ -112,6 +114,7 @@ public class FragmentDaily extends Fragment {
     private void Chartinit(){
         XAxis xAxis = dailyChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        int [] colorClassArray = new int[]{Color.GREEN , Color.CYAN, Color.YELLOW};
 //        final String[] time = new String[]{ "11pm", "12am", "1am", "2am", "3am","4am", "5am", "6am", "7am"};
 //        IndexAxisValueFormatter formatter = new IndexAxisValueFormatter(time);
 //        xAxis.setValueFormatter(formatter);
@@ -121,10 +124,11 @@ public class FragmentDaily extends Fragment {
         dailyChart.setPinchZoom(false);
         dailyChart.setTouchEnabled(false);
         dailyChart.setDoubleTapToZoomEnabled(false);
-        BarDataSet barDataSet = new BarDataSet(entries, "dB");
-        barDataSet.setBarBorderWidth(0.001f);
+        BarDataSet barDataSet = new BarDataSet(entries, "");
+//        barDataSet.setBarBorderWidth(0.001f);
         barDataSet.setColor(0xFF00BFFF);
         BarData barData = new BarData(barDataSet);
+        barDataSet.setColors(colorClassArray);
         dailyChart.setData(barData);
         dailyChart.invalidate();
     }
