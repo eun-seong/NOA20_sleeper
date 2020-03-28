@@ -1,12 +1,11 @@
 package com.example.noa20_sleeper;
 
 public class CalculateTime {
-    public static String calculate(String time){
-        int intTime = Integer.parseInt(time);
+    public static String calculate(int time){
 
-        int minute = intTime%60;
-        int hour = (int)intTime/60;
+        int minute = time%60;
+        int hour = time/60;
 
-        return String.format(hour+":"+minute);
+        return String.format("%d:%02d",hour,minute);
     }
 }

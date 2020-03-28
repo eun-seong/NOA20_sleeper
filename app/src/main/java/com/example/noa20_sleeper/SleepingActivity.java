@@ -1,4 +1,4 @@
-package com.example.noa20_sleeper.Activity;
+package com.example.noa20_sleeper;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -12,11 +12,6 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.noa20_sleeper.AlarmReceiver;
-import com.example.noa20_sleeper.AudioReader;
-import com.example.noa20_sleeper.InsertData;
-import com.example.noa20_sleeper.R;
 
 import java.io.File;
 import java.text.SimpleDateFormat;

@@ -1,4 +1,4 @@
-package com.example.noa20_sleeper.Fragment;
+package com.example.noa20_sleeper;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,22 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.noa20_sleeper.CalculateTime;
-import com.example.noa20_sleeper.GetData;
-import com.example.noa20_sleeper.R;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 // 네비게이션에서 통계 탭
 public class FragmentStatistic extends Fragment {
     private static final String TAG = "LOG_TAG";
-    private static final String TAG_DATA = "data";
-    private static final String TAG_MEAN = "mean";
-    private static final String TAG_BEST = "best";
-    private static final String TAG_WORST = "worst";
-
     private TextView[] tv;
+    private String[] COL_NAMES;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_statistic, container, false);
@@ -39,6 +31,12 @@ public class FragmentStatistic extends Fragment {
                 R.id.statistic_bed_mean, R.id.statistic_bed_best, R.id.statistic_bed_worst,
                 R.id.statistic_getup_mean, R.id.statistic_getup_best, R.id.statistic_getup_worst
         };
+        COL_NAMES = new String[]{
+                getString(R.string.COL_QUALITY),
+                getString(R.string.COL_TOTALTIME),
+                getString(R.string.COL_BEDTIME),
+                getString(R.string.COL_GETUPTIME)
+        };
 
         for(int i=0;i<12;i++){
             tv[i] = view.findViewById(tvId[i]);
@@ -47,21 +45,21 @@ public class FragmentStatistic extends Fragment {
         // TODO 그래프 그리기
 
         try {
-            String myJSON = new GetData().execute("getData.php").get();
+            String myJSON = new GetData().execute("getStatistics.php").get();
             JSONObject jsonObject = new JSONObject(myJSON);
-            JSONArray dataJSON = jsonObject.getJSONArray(TAG_DATA);
+            JSONArray dataJSON = jsonObject.getJSONArray(getString(R.string.TABLE_NAME_STATISTICS));
 
-            JSONObject c = dataJSON.getJSONObject(0);
-            tv[0].setText(c.getString(TAG_MEAN)+"%");
-            tv[1].setText(c.getString(TAG_BEST)+"%");
-            tv[2].setText(c.getString(TAG_WORST)+"%");
+            JSONObject c = dataJSON.getJSONObject(0).getJSONObject(COL_NAMES[0]);
+            Log.d(TAG, "onCreateView: JSON "+c);
+            tv[0].setText(String.format("%s%%", c.getString(getString(R.string.MEAN))));
+            tv[1].setText(String.format("%s%%", c.getString(getString(R.string.MAX))));
+            tv[2].setText(String.format("%s%%", c.getString(getString(R.string.MIN))));
 
-            int num = dataJSON.length();
-            for(int i=1;i<num;i++){
-                c = dataJSON.getJSONObject(i);
-                tv[i * 3].setText((CalculateTime.calculate(c.getString(TAG_MEAN))));
-                tv[i * 3 + 1].setText((CalculateTime.calculate(c.getString(TAG_BEST))));
-                tv[i * 3 + 2].setText((CalculateTime.calculate(c.getString(TAG_WORST))));
+            for(int i=1;i<4;i++){
+                c = dataJSON.getJSONObject(i).getJSONObject(COL_NAMES[i]);
+                tv[i * 3].setText((CalculateTime.calculate(c.getInt(getString(R.string.MEAN)))));
+                tv[i * 3 + 1].setText((CalculateTime.calculate(c.getInt(getString(R.string.MAX)))));
+                tv[i * 3 + 2].setText((CalculateTime.calculate(c.getInt(getString(R.string.MIN)))));
             }
 
         } catch (Exception e){

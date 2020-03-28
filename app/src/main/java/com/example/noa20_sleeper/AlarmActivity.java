@@ -1,11 +1,10 @@
-package com.example.noa20_sleeper.Activity;
+package com.example.noa20_sleeper;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.media.AudioAttributes;
-import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -17,8 +16,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.noa20_sleeper.R;
 
 import java.io.File;
 
@@ -102,8 +99,34 @@ public class AlarmActivity extends AppCompatActivity {
         }
         cursor.close();
 
-        sql = "SELECT * FROM " + getString(R.string.TABLE_NAME_TODAY);
+        sql = "SELECT * FROM " + getString(R.string.TABLE_NAME_YESTERDAY);
         cursor = sqliteDB.rawQuery(sql, null);
+
+        int cnt = 0, num = cursor.getCount();
+        int getupTime=0, bedTime=0, totalTime=num*5;
+
+        while(cursor.moveToNext()) {
+            String time = cursor.getString(0);
+            cnt++;
+
+            int hour = Integer.parseInt(time.substring(0,2));
+            int minute = Integer.parseInt(time.substring(3));
+
+            if(cnt==1) getupTime = hour*60 + minute;
+            else if(cnt==num) bedTime = hour*60 + minute;
+        }
+        cursor.close();
+
+        InsertData task = new InsertData();
+        task.execute("addData.php",
+                getString(R.string.COL_TOTALTIME), Integer.toString(totalTime),
+                getString(R.string.COL_BEDTIME), Integer.toString(bedTime),
+                getString(R.string.COL_GETUPTIME), Integer.toString(getupTime),
+                // TODO time 수정
+                getString(R.string.COL_QUALITY), Integer.toString(getupTime),
+                getString(R.string.COL_AWAKETIME), Integer.toString(getupTime),
+                getString(R.string.COL_SHALLOWSLEEP), Integer.toString(getupTime),
+                getString(R.string.COL_DEEPSLEEP), Integer.toString(getupTime));
     }
 
     @Override

@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.os.PowerManager;
 import android.util.Log;
 
-import com.example.noa20_sleeper.Activity.AlarmActivity;
-import com.example.noa20_sleeper.Activity.SleepingActivity;
-
 
 // 시간에 맞춰 알람을 울리게 하는 리시버
 public class AlarmReceiver extends BroadcastReceiver {

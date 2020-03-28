@@ -1,11 +1,4 @@
-package com.example.noa20_sleeper.Activity;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+package com.example.noa20_sleeper;
 
 import android.Manifest;
 import android.app.AlarmManager;
@@ -15,10 +8,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.example.noa20_sleeper.Fragment.FragmentAlarm;
-import com.example.noa20_sleeper.Fragment.FragmentDaily;
-import com.example.noa20_sleeper.Fragment.FragmentStatistic;
-import com.example.noa20_sleeper.R;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

@@ -1,16 +1,10 @@
-package com.example.noa20_sleeper.Fragment;
+package com.example.noa20_sleeper;
 
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,12 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TimePicker;
 
-import com.example.noa20_sleeper.Activity.MainActivity;
-import com.example.noa20_sleeper.Activity.SleepingActivity;
-import com.example.noa20_sleeper.AlarmReceiver;
-import com.example.noa20_sleeper.InsertData;
-import com.example.noa20_sleeper.PreferenceManager;
-import com.example.noa20_sleeper.R;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -92,7 +83,6 @@ public class FragmentAlarm extends Fragment {
                 InsertData task = new InsertData();
                 task.execute("settime.php","setTime", settime);
 
-
                 Log.d(TAG, "onClick: FragmentAlarm "+calendar.getTimeInMillis());
 
                 pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);
@@ -103,7 +93,6 @@ public class FragmentAlarm extends Fragment {
                 startActivity(sleepingIntent);
             }
         });
-
 
         return view;
     }
