@@ -11,4 +11,8 @@
     <color name="active_menu">#50B7EE</color>
     <color name="inactive_menu">#8C969D</color>
     <color name="colorTab">#0A1A28</color>
+    
+    <color name="GREEN">#BDF54E</color>
+    <color name="BLUE">#71F4CE</color>
+    <color name="YELLOW">#F7F752</color>
 </resources>

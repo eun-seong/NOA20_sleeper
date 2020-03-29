@@ -11,8 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 // 네비게이션에서 통계 탭
 public class FragmentStatistic extends Fragment {
@@ -20,6 +28,7 @@ public class FragmentStatistic extends Fragment {
     private TextView[] tv;
     private String[] COL_NAMES;
     private int[] tvId;
+    private BarChart[] Charts;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_statistic, container, false);
@@ -27,25 +36,47 @@ public class FragmentStatistic extends Fragment {
         initValue(view);
         setNums(view);
 
-        // TODO 그래프 그리기
-
-
+        Charts = new BarChart[]{
+                view.findViewById(R.id.quality_chart),
+                view.findViewById(R.id.time_chart),
+                view.findViewById(R.id.gotobed_chart),
+                view.findViewById(R.id.wakeup_chart)};
         try {
             String myJSON = new GetData().execute("getStatisticsData.php").get();
             JSONObject jsonObject = new JSONObject(myJSON);
             JSONArray dataJSON = jsonObject.getJSONArray(getString(R.string.TABLE_NAME_STATISTICS));
 
+            int cnt=0;
             for(int i=0;i<4;i++){
+                ArrayList<BarEntry> Entries = new ArrayList<>();
                 JSONArray c = dataJSON.getJSONObject(i).getJSONArray(COL_NAMES[i]);
-                Log.d(TAG, "onCreateView: JSON "+c);
-
+                Log.d(TAG, "onCreateView: JSON"+c);
+                for(int j=0; j <c.length() ; j++){
+                    cnt++;
+                    Entries.add(new BarEntry(cnt, c.getInt(j)));
+                }
+                Chartinit(Entries, i) ;
             }
-
         } catch (Exception e){
             Log.e(TAG, "onCreateView: FragmentDaily ", e);
         }
-
         return view;
+    }
+
+    private void Chartinit(ArrayList<BarEntry> Entries, int i) {
+        XAxis xAxis = Charts[i].getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        BarDataSet barDataSet = new BarDataSet(Entries,"");
+        barDataSet.setColor(0xFF00BFFF);
+        BarData barData = new BarData(barDataSet);
+        Charts[i].setFitBars(true);
+        Charts[i].animateXY(6, 6);
+        Charts[i].setPinchZoom(false);
+        Charts[i].setTouchEnabled(false);
+        Charts[i].setDoubleTapToZoomEnabled(false);
+        Charts[i].getLegend().setEnabled(false);
+        Charts[i].setData(barData);
+        Charts[i].invalidate();
     }
 
     private void initValue(View view){

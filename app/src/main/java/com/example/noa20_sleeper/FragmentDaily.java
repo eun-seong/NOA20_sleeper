@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -35,7 +36,7 @@ import java.util.Locale;
 public class FragmentDaily extends Fragment {
     private static final String TAG = "LOG_TAG";
     private static final String nextNotifyTime_key="nextNotifyTime";
-
+    private int[] colorClassArray;
     private BarChart dailyChart;
     private Context mContext;
     private SQLiteDatabase sqliteDB = null ;
@@ -45,48 +46,42 @@ public class FragmentDaily extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_daily, container, false);
         Log.d(TAG, "onCreateView: FragmentDaily created");
-
         mContext = this.getContext();
 
-        TextView tv_date = view.findViewById(R.id.date);
-        TextView tv_day = view.findViewById(R.id.day);
-        TextView tv_totalTime = view.findViewById(R.id.daily_totalTime);
-        TextView tv_quality = view.findViewById(R.id.daily_quality);
-        TextView tv_awakeTime = view.findViewById(R.id.daily_awakeTime);
-        TextView tv_shallowSleep = view.findViewById(R.id.daily_shallowSleep);
-        TextView tv_deepSleep = view.findViewById(R.id.daily_deepSleep);
-        TextView tv_bedTime = view.findViewById(R.id.daily_bedTime);
-        TextView tv_getupTime = view.findViewById(R.id.daily_getupTime);
+        colorClassArray = new int[]{
+                ContextCompat.getColor(mContext,R.color.YELLOW),
+                ContextCompat.getColor(mContext,R.color.GREEN),
+                ContextCompat.getColor(mContext,R.color.BLUE)};
+        TextView[] textViews = new TextView[]{
+                view.findViewById(R.id.date),
+                view.findViewById(R.id.day),
+                view.findViewById(R.id.daily_totalTime),
+                view.findViewById(R.id.daily_quality),
+                view.findViewById(R.id.daily_awakeTime),
+                view.findViewById(R.id.daily_shallowSleep),
+                view.findViewById(R.id.daily_deepSleep),
+                view.findViewById(R.id.daily_bedTime),
+                view.findViewById(R.id.daily_getupTime)};
         dailyChart = view.findViewById(R.id.daily_chart);
         entries = new ArrayList<>();
 
         long millis = PreferenceManager.getLong(mContext,nextNotifyTime_key);
         if(millis == -1) millis = Calendar.getInstance().getTimeInMillis();
-
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTimeInMillis(millis);
 
-        tv_date.setText(new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault()).format(calendar.getTime()));
-        tv_day.setText(new SimpleDateFormat("EE요일", Locale.getDefault()).format(calendar.getTime()));
-
         DBinit();
-
         String sqlSelect = "SELECT * FROM " + getString(R.string.TABLE_NAME_YESTERDAY);
         Cursor cursor = sqliteDB.rawQuery(sqlSelect, null);
 
         int cnt = 0;
         while(cursor.moveToNext()) {
-            String time = cursor.getString(0);
             int level = cursor.getInt(1);
             cnt++;
 
-            if(level<60){
-                entries.add(new BarEntry(cnt, new float[]{level, 0, 0}));
-            }else if(level<70){
-                entries.add(new BarEntry(cnt, new float[]{0, level, 0}));
-            }else{
-                entries.add(new BarEntry(cnt, new float[]{0, 0, level}));
-            }
+            if(level<Integer.parseInt(getString(R.string.INT_DEEP))) entries.add(new BarEntry(cnt, new float[]{level, 0, 0}));
+            else if(level<Integer.parseInt(getString(R.string.INT_SHALLOW))) entries.add(new BarEntry(cnt, new float[]{0, level, 0}));
+            else entries.add(new BarEntry(cnt, new float[]{0, 0, level}));
         }
 
         try {
@@ -95,17 +90,18 @@ public class FragmentDaily extends Fragment {
             JSONObject yesterdayJSON = jsonObject.getJSONArray(getString(R.string.TABLE_NAME_STATISTICS)).getJSONObject(0);
             Log.d(TAG, "onCreateView: JSON "+yesterdayJSON);
 
-            tv_totalTime.setText((CalculateTime.calculate(yesterdayJSON.getInt(getString(R.string.COL_TOTALTIME)))));
-            tv_quality.setText(String.format("%s%%", Integer.toString(yesterdayJSON.getInt(getString(R.string.COL_QUALITY)))));
-            tv_awakeTime.setText((CalculateTime.calculate(yesterdayJSON.getInt(getString(R.string.COL_AWAKETIME)))));
-            tv_shallowSleep.setText((CalculateTime.calculate(yesterdayJSON.getInt(getString(R.string.COL_SHALLOWSLEEP)))));
-            tv_deepSleep.setText((CalculateTime.calculate(yesterdayJSON.getInt(getString(R.string.COL_DEEPSLEEP)))));
-            tv_bedTime.setText((CalculateTime.calculate(yesterdayJSON.getInt(getString(R.string.COL_BEDTIME)))));
-            tv_getupTime.setText((CalculateTime.calculate(yesterdayJSON.getInt(getString(R.string.COL_GETUPTIME)))));
-
+            textViews[2].setText((CalculateTime.calculate(yesterdayJSON.getInt(getString(R.string.COL_TOTALTIME)))));
+            textViews[3].setText(String.format("%s%%", Integer.toString(yesterdayJSON.getInt(getString(R.string.COL_QUALITY)))));
+            textViews[4].setText((CalculateTime.calculate(yesterdayJSON.getInt(getString(R.string.COL_AWAKETIME)))));
+            textViews[5].setText((CalculateTime.calculate(yesterdayJSON.getInt(getString(R.string.COL_SHALLOWSLEEP)))));
+            textViews[6].setText((CalculateTime.calculate(yesterdayJSON.getInt(getString(R.string.COL_DEEPSLEEP)))));
+            textViews[7].setText((CalculateTime.calculate(yesterdayJSON.getInt(getString(R.string.COL_BEDTIME)))));
+            textViews[8].setText((CalculateTime.calculate(yesterdayJSON.getInt(getString(R.string.COL_GETUPTIME)))));
         } catch (Exception e){
             Log.e(TAG, "onCreateView: FragmentDaily ", e);
         }
+        textViews[0].setText(new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault()).format(calendar.getTime()));
+        textViews[1].setText(new SimpleDateFormat("EE요일", Locale.getDefault()).format(calendar.getTime()));
 
         Chartinit();
         return view;
@@ -114,21 +110,16 @@ public class FragmentDaily extends Fragment {
     private void Chartinit(){
         XAxis xAxis = dailyChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        int [] colorClassArray = new int[]{Color.GREEN , Color.CYAN, Color.YELLOW};
-//        final String[] time = new String[]{ "11pm", "12am", "1am", "2am", "3am","4am", "5am", "6am", "7am"};
-//        IndexAxisValueFormatter formatter = new IndexAxisValueFormatter(time);
-//        xAxis.setValueFormatter(formatter);
-//        xAxis.setGranularity(0.1f);
+        BarDataSet barDataSet = new BarDataSet(entries, "");
+        barDataSet.setColor(0xFF00BFFF);
+        BarData barData = new BarData(barDataSet);
+        barDataSet.setColors(colorClassArray);
         dailyChart.setFitBars(true);
         dailyChart.animateXY(6, 6);
         dailyChart.setPinchZoom(false);
         dailyChart.setTouchEnabled(false);
         dailyChart.setDoubleTapToZoomEnabled(false);
-        BarDataSet barDataSet = new BarDataSet(entries, "");
-//        barDataSet.setBarBorderWidth(0.001f);
-        barDataSet.setColor(0xFF00BFFF);
-        BarData barData = new BarData(barDataSet);
-        barDataSet.setColors(colorClassArray);
+        dailyChart.getLegend().setEnabled(false);
         dailyChart.setData(barData);
         dailyChart.invalidate();
     }
@@ -139,15 +130,12 @@ public class FragmentDaily extends Fragment {
         try {
             File databseFile = mContext.getDatabasePath(filename);
             sqliteDB = SQLiteDatabase.openOrCreateDatabase(databseFile, null);
-//            sqliteDB = SQLiteDatabase.openOrCreateDatabase("Widgets.db", null) ;
         } catch (SQLiteException e) {
             String databasePath = mContext.getFilesDir().getPath()+"/"+filename;
             File databaseFile = new File(databasePath);
             sqliteDB = SQLiteDatabase.openOrCreateDatabase(databaseFile, null);
-
             e.printStackTrace() ;
         }
-
         String sqlCreateTbl = "CREATE TABLE IF NOT EXISTS " + getString(R.string.TABLE_NAME_YESTERDAY) + " (" +
                 getString(R.string.TABLE_COL_TIME) +" TEXT, " +
                 getString(R.string.TABLE_COL_LEVEL) +" INTEGER);" ;

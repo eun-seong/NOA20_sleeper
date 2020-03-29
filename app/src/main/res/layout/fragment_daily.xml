@@ -66,25 +66,31 @@
                     android:orientation="horizontal">
 
                     <LinearLayout style="@style/CustomSubBox">
-                        <TextView style="@style/subText"
+                        <TextView style="@style/colorSubText"
+                            android:textColor="@color/YELLOW"
                             android:text="깨어남"/>
-                        <TextView style="@style/CustomText"
+                        <TextView style="@style/colorCustomText"
+                            android:textColor="@color/YELLOW"
                             android:id="@+id/daily_awakeTime"
                             android:text="0:19"/>
                     </LinearLayout>
 
                     <LinearLayout style="@style/CustomSubBox">
-                        <TextView style="@style/subText"
+                        <TextView style="@style/colorSubText"
+                            android:textColor="@color/GREEN"
                             android:text="얕은 수면"/>
-                        <TextView style="@style/CustomText"
+                        <TextView style="@style/colorCustomText"
+                            android:textColor="@color/GREEN"
                             android:id="@+id/daily_shallowSleep"
                             android:text="5:01"/>
                     </LinearLayout>
 
                     <LinearLayout style="@style/CustomSubBox">
-                        <TextView style="@style/subText"
+                        <TextView style="@style/colorSubText"
+                            android:textColor="@color/BLUE"
                             android:text="깊은 수면"/>
-                        <TextView style="@style/CustomText"
+                        <TextView style="@style/colorCustomText"
+                            android:textColor="@color/BLUE"
                             android:id="@+id/daily_deepSleep"
                             android:text="2:25"/>
                     </LinearLayout>

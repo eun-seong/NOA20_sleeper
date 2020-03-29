@@ -32,7 +32,6 @@ public class SleepingActivity extends AppCompatActivity {
     private Intent alarmIntent;
     private Context mContext;
     private Date date;
-    private String LatestDate;
     private double level;
 
     private AudioReader audioReader;
@@ -58,44 +57,25 @@ public class SleepingActivity extends AppCompatActivity {
         sumOfDB = 0; cnt = 0;
         audioReader = new AudioReader();
 
-        now = System.currentTimeMillis();
-        date = new Date(now);
-
-        SimpleDateFormat today = new SimpleDateFormat("yyyyMMdd");
-        LatestDate = today.format(date);
-        Log.d(TAG, "onCreate: SleepingActivity : Date "+LatestDate);
-
         DBinit();
-
-        // TODO 사용자의 환경 기본 소음이 얼마인지 알아내기
-        // 아마도 처음 5~10분 기준?
-
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 Log.d(TAG, "run: SleepingActivity calculate");
+
                 level = sumOfDB/cnt + 100;
-
-                /* TODO status의 범위 지정
-                 0 : 깨어남
-                 1 : 얕은 수면
-                 2 : 깊은 수면
-                */
-
                 SimpleDateFormat time = new SimpleDateFormat("HH:mm");
+                now = System.currentTimeMillis();
+                date = new Date(now);
                 String strNow = time.format(date);
-                Log.d(TAG, "run: SleepingActivity time : "+strNow+ " level : "+level);
 
-//                InsertData task = new InsertData();
-//                task.execute("addData.php",
-//                        "level",Double.toString(level));
+                Log.d(TAG, "run: SleepingActivity time : "+strNow+ " level : "+level);
 
                 String sqlUpdate = "INSERT OR REPLACE INTO "+ getString(R.string.TABLE_NAME_TODAY) + "("+
                         getString(R.string.TABLE_COL_TIME) +", "+
                         getString(R.string.TABLE_COL_LEVEL) +") VALUES ('" +
                         strNow +"', "+
                         level +")";
-
                 sqliteDB.execSQL(sqlUpdate);
 
                 sumOfDB=0;
@@ -113,9 +93,6 @@ public class SleepingActivity extends AppCompatActivity {
 
                 doStop();
                 timer.cancel();//타이머 종료
-
-                InsertData task = new InsertData();
-                task.execute("clearData.php","filename",LatestDate);
 
                 pendingIntent = PendingIntent.getBroadcast(mContext, 0, alarmIntent, 0);
                 ((MainActivity)MainActivity.mContext).getAlarmManager().cancel(pendingIntent);

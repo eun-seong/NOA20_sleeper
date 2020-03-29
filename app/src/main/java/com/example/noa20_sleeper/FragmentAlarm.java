@@ -78,12 +78,14 @@ public class FragmentAlarm extends Fragment {
 
                 SimpleDateFormat today = new SimpleDateFormat("HH:mm");
                 String settime = today.format(calendar.getTime());
-                PreferenceManager.setString(mContext, "alarmTime", ""+settime);
+                PreferenceManager.setString(mContext, "alarmTime", settime);
+                Log.d(TAG, "onClick: FragmentAlarm "+calendar.getTimeInMillis());
+
+                int setTime = hour_24*60 + minute;
 
                 InsertData task = new InsertData();
-                task.execute("settime.php","setTime", settime);
-
-                Log.d(TAG, "onClick: FragmentAlarm "+calendar.getTimeInMillis());
+                task.execute("setTime.php",
+                        getString(R.string.COL_SETTIME), Integer.toString(setTime));
 
                 pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);
 
