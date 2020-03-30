@@ -20,8 +20,9 @@
     <string name="MIN">min</string>
     <string name="MAX">max</string>
 
-    <string name="INT_DEEP">60</string>
-    <string name="INT_SHALLOW">70</string>
+    <string name="INT_DEEP">25</string>
+    <string name="INT_SHALLOW">35</string>
+    <string name="PLUSLEVEL">70</string>
 
     <string name="HOUR">hour</string>
     <string name="MINUTE">minute</string>

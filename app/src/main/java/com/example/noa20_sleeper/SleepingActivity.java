@@ -65,13 +65,11 @@ public class SleepingActivity extends AppCompatActivity {
             public void run() {
                 Log.d(TAG, "run: SleepingActivity calculate");
 
-                level = sumOfDB/cnt + 100;
+                level = sumOfDB/cnt + Integer.parseInt(getString(R.string.PLUSLEVEL));
                 SimpleDateFormat time = new SimpleDateFormat("HH:mm");
                 now = System.currentTimeMillis();
                 date = new Date(now);
                 String strNow = time.format(date);
-
-                Log.d(TAG, "run: SleepingActivity time : "+strNow+ " level : "+level);
 
                 String sqlUpdate = "INSERT OR REPLACE INTO "+ getString(R.string.TABLE_NAME_TODAY) + "("+
                         getString(R.string.TABLE_COL_TIME) +", "+
@@ -85,10 +83,14 @@ public class SleepingActivity extends AppCompatActivity {
 
                 long setTime = PreferenceManager.getLong(mContext, "nextNotifyTime");
 
-                if(setTime-1800000 < setTime && level>Integer.parseInt(getString(R.string.INT_SHALLOW))){
+                Log.d(TAG, "run:\tsetTime: "+setTime+"\tnow: "+now+"\ttime: "+strNow+"\tlevel: "+level);
+                if(setTime-1800000 < now && level>Integer.parseInt(getString(R.string.INT_SHALLOW))){
+                    Log.d(TAG, "run: -----------------------------alarm-----------------------------");
+
+                    pendingIntent = PendingIntent.getBroadcast(mContext, 0, alarmIntent, 0);
                     ((MainActivity)MainActivity.mContext).getAlarmManager().
                             setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
-                                    Calendar.getInstance().getTimeInMillis()+10000,
+                                    Calendar.getInstance().getTimeInMillis()+5000,
                                     pendingIntent);
                 }
             }
