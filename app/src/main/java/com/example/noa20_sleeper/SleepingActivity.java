@@ -1,6 +1,7 @@
 package com.example.noa20_sleeper;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -80,6 +82,15 @@ public class SleepingActivity extends AppCompatActivity {
 
                 sumOfDB=0;
                 cnt=0;
+
+                long setTime = PreferenceManager.getLong(mContext, "nextNotifyTime");
+
+                if(setTime-1800000 < setTime && level>Integer.parseInt(getString(R.string.INT_SHALLOW))){
+                    ((MainActivity)MainActivity.mContext).getAlarmManager().
+                            setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
+                                    Calendar.getInstance().getTimeInMillis()+10000,
+                                    pendingIntent);
+                }
             }
         };
 

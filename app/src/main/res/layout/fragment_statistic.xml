@@ -23,10 +23,10 @@
                 <TextView style="@style/subTitle"
                     android:text="수면의 질"/>
 
-                <com.github.mikephil.charting.charts.LineChart
+                <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/quality_chart"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="200dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal" />
 
@@ -67,10 +67,10 @@
                 <TextView style="@style/subTitle"
                     android:text="수면 시간"/>
 
-                <com.github.mikephil.charting.charts.LineChart
+                <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/time_chart"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="200dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal" />
 
@@ -112,10 +112,10 @@
                 <TextView style="@style/subTitle"
                     android:text="취침 시간"/>
 
-                <com.github.mikephil.charting.charts.LineChart
+                <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/gotobed_chart"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="200dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal" />
 
@@ -157,10 +157,10 @@
                 <TextView style="@style/subTitle"
                     android:text="기상 시간"/>
 
-                <com.github.mikephil.charting.charts.LineChart
+                <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/wakeup_chart"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="200dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal" />
 

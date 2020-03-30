@@ -18,7 +18,9 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -108,20 +110,30 @@ public class FragmentDaily extends Fragment {
     }
 
     private void Chartinit(){
+        int [] colorClassArray = new int[]{Color.CYAN , Color.GREEN, Color.YELLOW};
         XAxis xAxis = dailyChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        Description description = new Description();
+        description.setText("");
         BarDataSet barDataSet = new BarDataSet(entries, "");
-        barDataSet.setColor(0xFF00BFFF);
         BarData barData = new BarData(barDataSet);
         barDataSet.setColors(colorClassArray);
+        dailyChart.getAxisLeft().setEnabled(false);
+        dailyChart.setDescription(description);
+        dailyChart.getXAxis().setEnabled(false);
+        dailyChart.getLegend().setEnabled(false);
+        dailyChart.getAxisRight().setEnabled(false);
         dailyChart.setFitBars(true);
         dailyChart.animateXY(6, 6);
         dailyChart.setPinchZoom(false);
         dailyChart.setTouchEnabled(false);
         dailyChart.setDoubleTapToZoomEnabled(false);
-        dailyChart.getLegend().setEnabled(false);
         dailyChart.setData(barData);
         dailyChart.invalidate();
+        YAxis leftAxis = dailyChart.getAxisLeft();
+        YAxis rightAxis = dailyChart.getAxisRight();
+        leftAxis.setAxisMinValue(0f);
+        rightAxis.setAxisMinValue(0f);
     }
 
     private void DBinit(){

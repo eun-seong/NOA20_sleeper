@@ -124,13 +124,14 @@ public class AlarmActivity extends AppCompatActivity {
         }
         cursor.close();
 
+        int quality = (deep+shallow)/(deep+shallow+wakeup);
         InsertData task = new InsertData();
         task.execute("addData.php",
                 getString(R.string.COL_TOTALTIME), Integer.toString(totalTime),
                 getString(R.string.COL_BEDTIME), Integer.toString(bedTime),
                 getString(R.string.COL_GETUPTIME), Integer.toString(getupTime),
                 // TODO time 수정
-                getString(R.string.COL_QUALITY), Integer.toString(getupTime),
+                getString(R.string.COL_QUALITY), Integer.toString(quality),
                 getString(R.string.COL_AWAKETIME), Integer.toString(wakeup*5),
                 getString(R.string.COL_SHALLOWSLEEP), Integer.toString(shallow*5),
                 getString(R.string.COL_DEEPSLEEP), Integer.toString(deep*5));

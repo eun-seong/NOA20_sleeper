@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -45,7 +46,6 @@ public class FragmentStatistic extends Fragment {
             String myJSON = new GetData().execute("getStatisticsData.php").get();
             JSONObject jsonObject = new JSONObject(myJSON);
             JSONArray dataJSON = jsonObject.getJSONArray(getString(R.string.TABLE_NAME_STATISTICS));
-
             int cnt=0;
             for(int i=0;i<4;i++){
                 ArrayList<BarEntry> Entries = new ArrayList<>();
@@ -57,6 +57,7 @@ public class FragmentStatistic extends Fragment {
                 }
                 Chartinit(Entries, i) ;
             }
+
         } catch (Exception e){
             Log.e(TAG, "onCreateView: FragmentDaily ", e);
         }
@@ -66,18 +67,25 @@ public class FragmentStatistic extends Fragment {
     private void Chartinit(ArrayList<BarEntry> Entries, int i) {
         XAxis xAxis = Charts[i].getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        Description description = new Description();
+        description.setText("");
         BarDataSet barDataSet = new BarDataSet(Entries,"");
-        barDataSet.setColor(0xFF00BFFF);
         BarData barData = new BarData(barDataSet);
+        barDataSet.setColor(0xFF87CEEB);
+        Charts[i].getAxisLeft().setEnabled(false);
+        Charts[i].setDescription(description);
+        Charts[i].getXAxis().setEnabled(false);
+        Charts[i].getLegend().setEnabled(false);
+        Charts[i].getAxisRight().setEnabled(false);
         Charts[i].setFitBars(true);
         Charts[i].animateXY(6, 6);
         Charts[i].setPinchZoom(false);
         Charts[i].setTouchEnabled(false);
         Charts[i].setDoubleTapToZoomEnabled(false);
-        Charts[i].getLegend().setEnabled(false);
         Charts[i].setData(barData);
         Charts[i].invalidate();
     }
+
 
     private void initValue(View view){
         tv = new TextView[12];
