@@ -124,7 +124,7 @@ public class AlarmActivity extends AppCompatActivity {
         }
         cursor.close();
 
-        long quality = Math.round((double)(deep+shallow)/(double)(deep+shallow+wakeup));
+        long quality = Math.round((double)(deep+shallow)/(double)(deep+shallow+wakeup)*100);
         InsertData task = new InsertData();
         task.execute("addData.php",
                 getString(R.string.COL_TOTALTIME), Integer.toString(totalTime),
