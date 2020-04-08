@@ -97,7 +97,7 @@ public class SleepingActivity extends AppCompatActivity {
         };
 
         doStart();
-        timer.schedule(timerTask, 10000, 10000); //Timer 실행
+        timer.schedule(timerTask, 300000, 300000); //Timer 실행
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
