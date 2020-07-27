@@ -1,4 +1,6 @@
 <resources>
+    <string name="HOST_IP">http://3.34.197.146:9091/</string>
+
     <string name="app_name">sleeper</string>
     <string name="TABLE_NAME_TODAY">today</string>
     <string name="TABLE_NAME_YESTERDAY">yesterday</string>

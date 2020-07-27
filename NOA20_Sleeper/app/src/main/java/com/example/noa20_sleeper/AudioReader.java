@@ -219,7 +219,7 @@ public class AudioReader
         inputListener.onReadError(code);
     }
 
-    private static final String TAG = "WindMeter";
+    private static final String TAG = "LOG_Audio";
     private AudioRecord audioInput;
     private short[][] inputBuffer = null;
     private int inputBufferWhich = 0;

@@ -1,6 +1,8 @@
 package com.example.noa20_sleeper;
 
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -12,9 +14,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class InsertData extends AsyncTask<String, Void, String> {
-    private static final String TAG = "LOG_TAG";
-    private static final String IP = "http://192.168.0.16" + ":9090/NOA/";
-//    private static final String IP = "http://172.30.1.37" + ":9090/NOA/";
+    private static final String TAG = "@@@LOG_TAG";
+    private static final String IP = "http://3.34.197.146:9091/";
 
     @Override
     protected void onPreExecute() {

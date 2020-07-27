@@ -84,20 +84,21 @@ public class SleepingActivity extends AppCompatActivity {
                 long setTime = PreferenceManager.getLong(mContext, "nextNotifyTime");
 
                 Log.d(TAG, "run:\tsetTime: "+setTime+"\tnow: "+now+"\ttime: "+strNow+"\tlevel: "+level);
-                if(setTime-1800000 < now && level>Integer.parseInt(getString(R.string.INT_SHALLOW))){
-                    Log.d(TAG, "run: -----------------------------alarm-----------------------------");
-
-                    pendingIntent = PendingIntent.getBroadcast(mContext, 0, alarmIntent, 0);
-                    ((MainActivity)MainActivity.mContext).getAlarmManager().
-                            setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
-                                    Calendar.getInstance().getTimeInMillis()+5000,
-                                    pendingIntent);
-                }
+//                if(setTime-1800000 < now && level>Integer.parseInt(getString(R.string.INT_SHALLOW))){
+//                    Log.d(TAG, "run: -----------------------------alarm-----------------------------");
+//
+//                    pendingIntent = PendingIntent.getBroadcast(mContext, 0, alarmIntent, 0);
+//                    ((MainActivity)MainActivity.mContext).getAlarmManager().
+//                            setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
+//                                    Calendar.getInstance().getTimeInMillis()+5000,
+//                                    pendingIntent);
+//                }
             }
         };
 
         doStart();
-        timer.schedule(timerTask, 300000, 300000); //Timer 실행
+        timer.schedule(timerTask, 1000, 1000); //Timer 실행
+//        timer.schedule(timerTask, 300000, 300000); //Timer 실행
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
