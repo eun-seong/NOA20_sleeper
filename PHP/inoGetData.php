@@ -18,7 +18,8 @@ if ($stmt->rowCount() > 0) {
                 'alarmTime' => $alarmTime,
                 'totalTime' => $totalTime,
                 'shallowSleep' => $shallowSleep,
-                'deepSleep' => $deepSleep
+                'deepSleep' => $deepSleep,
+                'hopeTime' => $hopeTime
             )
         );
     }
