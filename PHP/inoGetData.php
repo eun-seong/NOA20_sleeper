@@ -19,7 +19,8 @@ if ($stmt->rowCount() > 0) {
                 'totalTime' => $totalTime,
                 'shallowSleep' => $shallowSleep,
                 'deepSleep' => $deepSleep,
-                'hopeTime' => $hopeTime
+                'hopeTime' => $hopeTime,
+                'usrStatus' => $usrStatus
             )
         );
     }
