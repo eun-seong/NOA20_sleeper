@@ -44,7 +44,7 @@ public class FragmentAlarm extends Fragment {
 
         Log.d(TAG, "onCreateView: FragmentAlarm created");
         picker = view.findViewById(R.id.timePicker);
-        startButton = view.findViewById(R.id.bt_start);
+        startButton = view.findViewById(R.id.desired_sleep);
         mContext = this.getContext();
 
         nextNotifyTime = new GregorianCalendar();

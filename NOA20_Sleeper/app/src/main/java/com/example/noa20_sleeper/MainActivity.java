@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentAlarm fragmentAlarm = new FragmentAlarm();
     private FragmentDaily fragmentDaily = new FragmentDaily();
     private FragmentStatistic fragmentStatistic = new FragmentStatistic();
+    private FragmentSetting fragmentSetting = new FragmentSetting();
     private static AlarmManager alarmManager;
     public static Context mContext;
 
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectedListener());
     }
 
+
     // 네비게이션 바 설정
     class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener{
         @Override
@@ -61,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.Statistic:
                     transaction.replace(R.id.frameLayout, fragmentStatistic).commitAllowingStateLoss();
                     break;
+                case R.id.Setting:
+                    transaction.replace(R.id.frameLayout, fragmentSetting).commitAllowingStateLoss();
+                    break;
+
+
             }
             return true;
         }

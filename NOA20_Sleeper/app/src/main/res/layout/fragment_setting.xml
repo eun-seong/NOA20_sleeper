@@ -7,33 +7,33 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:padding="10sp"
-    android:id="@+id/alarm_fragment">
+    android:id="@+id/setting_fragment">
 
     <TextView
-        android:id="@+id/tracking_sleep"
+        android:id="@+id/hope_sleep"
         style="@style/Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="수면 추적 "
+        android:text="희망 수면 시간 "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="103dp" />
+        tools:layout_editor_absoluteY="104dp" />
 
     <TimePicker
         android:id="@+id/timePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:timePickerMode="spinner"
+        app:layout_constraintBottom_toTopOf="@id/desired_sleep"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/desired_sleep"
-        app:layout_constraintVertical_chainStyle="packed"
-        android:timePickerMode="spinner"/>
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <Button
         android:id="@+id/desired_sleep"
         style="@style/ClickButton"
-        android:text="시작"
+        android:text="설정"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
