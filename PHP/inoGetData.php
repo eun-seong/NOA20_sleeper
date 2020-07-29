@@ -20,7 +20,8 @@ if ($stmt->rowCount() > 0) {
                 'shallowSleep' => $shallowSleep,
                 'deepSleep' => $deepSleep,
                 'hopeTime' => $hopeTime,
-                'usrStatus' => $usrStatus
+                'usrStatus' => $usrStatus,
+                'bright' => $bright
             )
         );
     }
