@@ -18,7 +18,8 @@
     <string name="COL_GETUPTIME">getupTime</string>
     <string name="COL_SETTIME">setTime</string>
     <string name="COL_HOPETIME">hopeTime</string>
-    <string name="COL_USERSTATUS">usrStatus</string>
+    <string name="COL_BRIGHT">bright</string>
+
 
     <string name="MEAN">mean</string>
     <string name="MIN">min</string>

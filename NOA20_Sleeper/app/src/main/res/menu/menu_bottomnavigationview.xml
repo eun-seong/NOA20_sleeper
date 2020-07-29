@@ -16,5 +16,5 @@
     <item
         android:id="@+id/Setting"
         android:icon="@drawable/sleep"
-        android:title="수면 시간 설정" />
+        android:title="수면 환경 " />
 </menu>

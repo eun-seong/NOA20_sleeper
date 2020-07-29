@@ -6,20 +6,21 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 public class FragmentSetting extends Fragment {
     private static final String TAG = "LOG_TAG";
@@ -35,13 +36,37 @@ public class FragmentSetting extends Fragment {
     int hour, hour_24, minute;
     String am_pm;
 
+    private SeekBar sb;
+    TextView tv_val;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
         Log.d(TAG, "onCreateView: FragmentSetting created");
 
+        super.onCreateView(inflater, container, savedInstanceState);
+
+        sb=(SeekBar) view.findViewById(R.id.seekbar);
+        tv_val=(TextView) view.findViewById(R.id.tv_val);
+        sb.getProgressDrawable().setColorFilter( Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_IN );
+        sb.getThumb().setColorFilter(Color.parseColor("#00BFFF"), PorterDuff.Mode.SRC_IN );
+
+
+        sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                InsertData task = new InsertData();
+                task.execute("setBright.php", getString(R.string.COL_BRIGHT), Integer.toString(progress));
+
+                tv_val.setText(" 수면등 밝기 : " + progress);
+
+            }
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+
         picker = view.findViewById(R.id.timePicker);
         picker.setIs24HourView(true);
+
 
         startButton = view.findViewById(R.id.desired_sleep);
 
