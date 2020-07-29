@@ -6,7 +6,7 @@ include('dbcon.php');
 $android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
 
 if ((($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['submit'])) || $android) {
-  $hopeTime = $_POST['bright'];
+  $bright = $_POST['bright'];
   try {
     $stmt = $con->prepare('UPDATE ino_data SET bright=(:bright)');
     $stmt->bindParam(':bright', $bright);
