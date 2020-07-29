@@ -84,6 +84,14 @@ public class SleepingActivity extends AppCompatActivity {
                 long setTime = PreferenceManager.getLong(mContext, "nextNotifyTime");
 
                 Log.d(TAG, "run:\tsetTime: "+setTime+"\tnow: "+now+"\ttime: "+strNow+"\tlevel: "+level);
+
+                int userStatus = (level<Integer.parseInt(getString(R.string.INT_DEEP))?2:
+                        (level<Integer.parseInt(getString(R.string.INT_SHALLOW))?1:0));
+
+                InsertData task = new InsertData();
+                task.execute("setStatus.php",
+                        getString(R.string.COL_USERSTATUS), Integer.toString(userStatus));
+
 //                if(setTime-1800000 < now && level>Integer.parseInt(getString(R.string.INT_SHALLOW))){
 //                    Log.d(TAG, "run: -----------------------------alarm-----------------------------");
 //
