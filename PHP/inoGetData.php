@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 include('dbcon.php');
 
 $apiKey = "5d48c9b4320dc403008c5d2f2f1d2e63";
-$cityId = "1835848";
+$cityId = "1843561";
 $ApiUrl = "http://api.openweathermap.org/data/2.5/weather?id=" . $cityId . "&appid=" . $apiKey;
 
 $request = file_get_contents($ApiUrl); //example ID
