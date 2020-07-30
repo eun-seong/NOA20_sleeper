@@ -12,8 +12,17 @@ $request = file_get_contents($ApiUrl); //example ID
 
 $jsonPHP  = json_decode($request,true);
 
-$weather_desc = $jsonPHP["weather"][0]["description"];
+$weather_id = $jsonPHP["weather"][0]["id"];
 $temp = $jsonPHP["main"]["temp"];
+$weather_status = 0;
+
+if($weather_id!=800) {
+    $div = $weather_id%100;
+    if($div == 8 || $div==7) $weather_status = 1;
+    else if($div== 2 || $div == 3||$div == 5) $weather_status=2;
+    else if($div == 6)$weather_status = 3;
+    else $weather_status = 0;
+}
 
 date_default_timezone_set('Asia/Seoul');
 $localdate = date("Y-m-d");
@@ -42,7 +51,7 @@ if ($stmt->rowCount() > 0) {
                 'hopeTime' => $hopeTime,
                 'usrStatus' => $usrStatus,
                 'bright' => $bright,
-                'weather_desc' => $weather_desc,
+                'weather_status' => $weather_status,
                 'temp' => $temp
             )
         );
