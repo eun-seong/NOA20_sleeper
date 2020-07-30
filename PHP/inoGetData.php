@@ -51,8 +51,8 @@ if ($stmt->rowCount() > 0) {
                 'hopeTime' => $hopeTime,
                 'usrStatus' => $usrStatus,
                 'bright' => $bright,
-                'weather_status' => $weather_status,
-                'temp' => $temp
+                'weather_status' => strval($weather_status),
+                'temp' => strval($temp)
             )
         );
     }
