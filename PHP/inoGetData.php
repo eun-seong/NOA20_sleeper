@@ -15,20 +15,10 @@ $jsonPHP  = json_decode($request,true);
 $weather_desc = $jsonPHP["weather"][0]["description"];
 $temp = $jsonPHP["main"]["temp"];
 
-try {
-    $stmt = $con->prepare('UPDATE ino_data SET weather_desc=(:weather_desc), temp=(:temp)');
-    $stmt->bindParam(':weather_desc', $weather_desc);
-    $stmt->bindParam(':temp', $temp);
-
-    if ($stmt->execute()) {
-      $successMSG = "날씨 정보 업데이트 성공";
-    } else {
-      $errMSG = "날씨 정보 업데이트 실패";
-    }
-  } catch (PDOException $e) {
-    die("Database error: " . $e->getMessage());
-  }
-
+date_default_timezone_set('Asia/Seoul');
+$localdate = date("Y-m-d");
+$hour = date("H");
+$minute = date('i');
 
 $stmt = $con->prepare('SELECT * from ino_data');
 $stmt->execute();
@@ -42,6 +32,9 @@ if ($stmt->rowCount() > 0) {
         array_push(
             $data,
             array(
+                'localdate' => $localdate,
+                'hour' => $hour,
+                'minute' => $minute,
                 'alarmTime' => $alarmTime,
                 'totalTime' => $totalTime,
                 'shallowSleep' => $shallowSleep,
