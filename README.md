@@ -1,6 +1,6 @@
 # NOA20_sleeper
 NOA 2020 Daejeon Sleeper Project   
-수면 패턴 분석을 통한 스마트 무드등
+수면 패턴 분석을 통한 스마트 무드등    
 🏅 아랩 스타트업 액셀러레이팅 최우수상
 
 ## 설명
