@@ -1,12 +1,11 @@
 # 수면 패턴 분석 App과 스마트 무드등 [Sleeper]
-<img src='https://user-images.githubusercontent.com/49540564/104118529-2ad3db00-536d-11eb-91ed-c4e1c63a6eca.JPG' alt='Sleeper_img'
-width=400px/>
+<img src='./2021-01-10-18-51-11.png' alt='Sleeper_img' height=300px/> <img src='./2021-01-10-18-52-36.png' alt='Sleeper_img' height=300px/>
 
 ## 프로젝트 요약
 > 2020.02. - 2020.08.   
 
-> Android Application Developer      
-> Back-End Developer   
+> **Android Application Developer**      
+> **Back-End Developer**   
 * 🏅 교내 아랩 스타트업 액셀러레이팅 최우수상
 * 불면증 개선을 위해 기획하였습니다.
 * 모바일 앱을 통해 수면 패턴을 분석하고 분석 결과를 시각화합니다.
