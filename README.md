@@ -1,4 +1,7 @@
 # 수면 패턴 분석 App과 스마트 무드등 [Sleeper]
+<img src='https://user-images.githubusercontent.com/49540564/104118529-2ad3db00-536d-11eb-91ed-c4e1c63a6eca.JPG' alt='Sleeper_img'
+width=400px/>
+
 ## 프로젝트 요약
 > 2020.02. - 2020.08.   
 
