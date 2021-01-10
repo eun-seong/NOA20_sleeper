@@ -21,7 +21,7 @@
 * 사용자 데이터 시각화
 
 ### BE
-![Langauge:Java](https://img.shields.io/badge/Langauge-PHP-green) ![platform:Android](https://img.shields.io/badge/Platform-AWS-blue) ![Langauge:Java](https://img.shields.io/badge/DB-MySQL-yellow)
+![Langauge:PHP](https://img.shields.io/badge/Langauge-PHP-green) ![platform:AWS](https://img.shields.io/badge/Platform-AWS-blue) ![DB:MySQL](https://img.shields.io/badge/DB-MySQL-yellow)
 
 * AWS free tier 사용
 * MySQL 사용자 DB 생성
