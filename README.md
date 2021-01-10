@@ -11,8 +11,7 @@
 
 ## 담당 역할
 ### FE
-<img src='https://img.shields.io/badge/Langauge-Java-green'/>
-<img src='https://img.shields.io/badge/Platform-Android-blue'/>   
+![Langauge:Java](https://img.shields.io/badge/Langauge-Java-green) ![platform:Android](https://img.shields.io/badge/Platform-Android-blue)
 
 * UI/UX Design
 * 마이크를 통한 사용자의 수면 패턴 분석
@@ -20,9 +19,7 @@
 * 사용자 데이터 시각화
 
 ### BE
-<img src='https://img.shields.io/badge/Langauge-PHP-green'/>
-<img src='https://img.shields.io/badge/Platform-AWS-blue'/>   
-<img src='https://img.shields.io/badge/DB-MySQL-yellow'/>   
+![Langauge:Java](https://img.shields.io/badge/Langauge-PHP-green) ![platform:Android](https://img.shields.io/badge/Platform-AWS-blue) ![Langauge:Java](https://img.shields.io/badge/DB-MySQL-yellow)
 
 * AWS free tier 사용
 * MySQL 사용자 DB 생성
